@@ -1,0 +1,39 @@
+from datetime import datetime
+import json
+
+from geojson.models.radicados_models import ConfigTiposRadicadoAgno
+from geojson.models.tramites_models import Tramites
+from rest_framework.exceptions import NotFound
+
+class UtilsGeoJson:
+    @staticmethod
+    def get_tramite_sasoftco(self, tramite):
+        cadena = ""
+        radicado = tramite.id_solicitud_tramite.id_radicado
+        organized_data = {}
+        if radicado:
+            instance_config_tipo_radicado = ConfigTiposRadicadoAgno.objects.filter(agno_radicado=radicado.agno_radicado,cod_tipo_radicado=radicado.cod_tipo_radicado).first()
+            numero_con_ceros = str(radicado.nro_radicado).zfill(instance_config_tipo_radicado.cantidad_digitos)
+            cadena= instance_config_tipo_radicado.prefijo_consecutivo+'-'+str(instance_config_tipo_radicado.agno_radicado)+'-'+numero_con_ceros
+
+            tramites_values = Tramites.objects.filter(radicate_bia=cadena).values()
+
+                
+            if tramites_values:
+                organized_data = {
+                    'procedure_id': tramites_values[0]['procedure_id'],
+                    'radicate_bia': tramites_values[0]['radicate_bia'],
+                    'proceeding_id': tramites_values[0]['proceeding_id'],
+                }
+                
+                for item in tramites_values:
+                    field_name = item['name_key']
+                    if item['type_key'] == 'json':
+                        value = json.loads(item['value_key'])
+                    else:
+                        value = item['value_key']
+                    organized_data[field_name] = value
+            else:
+                raise NotFound('No se encontró el detalle del trámite elegido')
+            
+        return organized_data

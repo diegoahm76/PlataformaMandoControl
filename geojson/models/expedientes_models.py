@@ -1,0 +1,155 @@
+from django.db import models
+
+from geojson.choices.cod_estado_eliminacion_choices import COD_ESTADO_ELIMINACION_CHOICES
+from geojson.models.trd_models import CatSeriesUnidadOrgCCDTRD,TablaRetencionDocumental, TipologiasDoc, TiposMediosDocumentos
+from geojson.models.organigrama_models import UnidadesOrganizacionales
+from geojson.models.ccd_models import SeriesDoc,SubseriesDoc
+from geojson.choices.tipo_expediente_choices import tipo_expediente_CHOICES
+from geojson.choices.estado_expediente_choices import estado_expediente_CHOICES
+from geojson.choices.etapa_actual_expediente_choices import etapa_actual_expediente_CHOICES
+from geojson.choices.categoria_archivo_choices import categoria_archivo_CHOICES
+from geojson.choices.tipo_origen_doc_choices import tipo_origen_doc_CHOICES
+from geojson.choices.tipo_subsistema_creado_choices import tipo_subsistema_creado_CHOICES
+from geojson.choices.tipo_radicado_choices import TIPOS_RADICADO_CHOICES
+
+
+#EXPEDIENTES_DOCUMENTALES
+#Almacena la información de los diferentes expedientes de las Series Documentales de las Unidades Organizacionales de la corporación.	
+
+class ExpedientesDocumentales(models.Model):
+
+    id_expediente_documental = models.AutoField(primary_key=True, db_column='T236IdExpedienteDocumental')
+    codigo_exp_und_serie_subserie = models.CharField(max_length=50, db_column='T236codigoExp_UndSerieSubserie')
+    codigo_exp_Agno = models.SmallIntegerField(db_column='T236codigoExp_Agno')
+    codigo_exp_consec_por_agno	= models.SmallIntegerField(db_column='T236codigoExp_ConsecPorAgno', null=True, blank=True)
+    id_cat_serie_und_org_ccd_trd_prop = models.ForeignKey(CatSeriesUnidadOrgCCDTRD, on_delete=models.CASCADE, db_column='T236Id_CatSerie_UndOrg_CCD_TRD_Prop')
+    id_trd_origen= models.ForeignKey(TablaRetencionDocumental, on_delete=models.CASCADE, db_column='T236Id_TRDOrigen')
+    id_und_seccion_propietaria_serie= models.ForeignKey(UnidadesOrganizacionales, related_name='id_und_seccion_propietaria_serie',on_delete=models.CASCADE, db_column='T236Id_UndSeccionPropietariaSerie')
+    id_serie_origen= models.ForeignKey(SeriesDoc, on_delete=models.CASCADE, db_column='T236Id_SerieOrigen')
+    id_subserie_origen= models.ForeignKey(SubseriesDoc, on_delete=models.SET_NULL, db_column='T236Id_SubserieOrigen',null=True, blank=True)
+    titulo_expediente= models.CharField(max_length=255, db_column='T236tituloExpediente')
+    descripcion_expediente	= models.CharField(max_length=500, db_column='T236descripcionExpediente',null=True,blank=True)
+    fecha_apertura_expediente = models.DateTimeField(db_column='T236fechaAperturaExpediente')
+    id_persona_titular_exp_complejo= models.ForeignKey('geojson.Personas', related_name='id_persona_titular_exp_complejo',blank=True,null=True, on_delete=models.SET_NULL, db_column='T236Id_PersonaTitular_ExpComplejo')
+    cod_tipo_expediente = models.CharField(max_length=1, choices=tipo_expediente_CHOICES, db_column='T236codTipoExpediente')
+    estado = models.CharField(max_length=1, choices=estado_expediente_CHOICES, db_column='T236estado')
+    fecha_folio_inicial	 = models.DateTimeField(db_column='T236fechaFolioInicial')
+    fecha_folio_final= models.DateTimeField(blank=True,null=True,db_column='T236fechaFolioFinal')
+    fecha_cierre_reapertura_actual = models.DateTimeField(blank=True,null=True,db_column='T236fechaCierreReaperturaActual')
+    fecha_firma_cierre_indice_elec = models.DateTimeField(blank=True,null=True,db_column='T236fechaFirmaCierreIndiceElec')
+    palabras_clave_expediente = models.CharField(max_length=255, blank=True,null=True, db_column='T236palabrasClaveExpediente')
+    cod_etapa_de_archivo_actual_exped = models.CharField(max_length=1, choices=etapa_actual_expediente_CHOICES, db_column='T236codEtapaDeArchivoActual_Exped')
+    fecha_paso_a_archivo_central = models.DateTimeField(blank=True,null=True,db_column='T236fechaPasoAArchivoCentral')
+    fecha_paso_a_archivo_historico = models.DateTimeField(blank=True,null=True,db_column='T236fechaPasoAArchivoHistorico')
+    fecha_eliminacion_x_dispo_final	= models.DateTimeField(blank=True,null=True,db_column='T236fechaEliminacionXDispoFinal')
+    tiene_carpeta_fisica = models.BooleanField(default=False, db_column='T236tieneCarpetaFisica')
+    ubicacion_fisica_esta_actualizada = models.BooleanField(default=False, db_column='T236ubicacionFisicaEstaActualizada')
+    anulado = models.BooleanField(blank=True, null=True, db_column='T236anulado')
+    observacion_anulacion = models.CharField(max_length=255, blank=True, null=True, db_column='T236observacionAnulacion')
+    fecha_anulacion	= models.DateTimeField(blank=True, null=True, db_column='T236fechaAnulacion')
+    id_persona_anula = models.ForeignKey('geojson.Personas', related_name='id_persona_anula_expediente', blank=True, null=True, on_delete=models.SET_NULL, db_column='T236Id_PersonaAnula')
+    creado_automaticamente = models.BooleanField(blank=True, null=True, db_column='T236creadoAutomaticamente')
+    fecha_creacion_manual = models.DateTimeField(blank=True, null=True, db_column='T236fechaDeCreacionManual')
+    id_persona_crea_manual = models.ForeignKey('geojson.Personas', related_name='id_persona_crea_manual_expediente', blank=True, null=True, on_delete=models.SET_NULL, db_column='T236Id_PersonaCreaManual')
+    id_unidad_org_oficina_respon_original = models.ForeignKey(UnidadesOrganizacionales, related_name='id_unidad_org_oficina_respon_original',on_delete=models.CASCADE, db_column='T236Id_UnidadOrgOficinaRespon_Original')
+    id_und_org_oficina_respon_actual = models.ForeignKey(UnidadesOrganizacionales,related_name='expedientes_respon_actual', on_delete=models.CASCADE, db_column='T236Id_UndOrgOficinaRespon_Actual')
+    id_persona_responsable_actual	= models.ForeignKey('geojson.Personas', related_name='id_persona_responsable_actual',blank=True,null=True,on_delete=models.SET_NULL, db_column='T236Id_PersonaResponsableActual')
+    id_eliminacion_exp = models.ForeignKey('EliminacionDocumental', on_delete=models.SET_NULL, null=True, blank=True, db_column='T236Id_EliminacionExp')
+
+    class Meta:
+        db_table = 'T236ExpedientesDocumentales'
+        verbose_name = 'Expediente Docuemental'
+        verbose_name_plural = 'Expedientes Documentales'
+        unique_together = ('codigo_exp_und_serie_subserie', 'codigo_exp_Agno', 'codigo_exp_consec_por_agno')
+
+        
+class EliminacionDocumental(models.Model):
+    id_eliminacion_documental = models.AutoField(primary_key=True, db_column='T304IdEliminacionDocumental')
+    id_persona_elimino = models.ForeignKey('geojson.Personas', on_delete=models.CASCADE, db_column='T304Id_PersonaElimino')
+    estado = models.CharField(max_length=1, choices=COD_ESTADO_ELIMINACION_CHOICES, db_column='T304estado')
+    fecha_publicacion = models.DateTimeField(auto_now_add=True, db_column='T304fechaPublicacion')
+    fecha_eliminacion = models.DateTimeField(null=True, blank=True, db_column='T304fechaEliminacion')
+    nro_expedientes_eliminados = models.IntegerField(db_column='T304nroExpedientesEliminados')
+    dias_publicacion = models.SmallIntegerField(db_column='T304diasPublicacion')
+    tiene_observaciones = models.BooleanField(null=True, blank=True, db_column='T304tieneObservaciones')
+    observaciones = models.CharField(max_length=250, blank=True, null=True, db_column='T304observaciones')
+
+    class Meta:
+        db_table = 'T304EliminacionDocumental'
+        verbose_name = 'Eliminacion Documental'
+        verbose_name_plural = 'Eliminaciones Documentales'
+
+class ArchivosDigitales(models.Model):
+
+    id_archivo_digital = models.AutoField(primary_key=True, db_column='T238IdArchivoDigital')
+    nombre_de_Guardado = models.CharField(max_length=20, db_column='T238nombreDeGuardado', unique=True)
+    formato = models.CharField(max_length=20, db_column='T238formato')
+    tamagno_kb = models.IntegerField(db_column='T238tamagnoEnKB')
+    ruta_archivo = models.FileField(max_length=255, db_column='T238rutaArchivo')
+    #ruta_archivo = models.CharField(max_length=500, db_column='T238rutaArchivo')
+    fecha_creacion_doc = models.DateTimeField(auto_now=True,db_column='T238fechaCreacionDoc')
+    es_Doc_elec_archivo = models.BooleanField(db_column='T238EsDocElecDeArchivo')
+
+    def __str__(self):
+            return self.nombre_de_Guardado
+    
+    class Meta:
+            db_table = 'T238ArchivosDigitales'
+            verbose_name = 'Archivo Digital'
+            verbose_name_plural = 'Archivos Digitales'
+        
+class DocumentosDeArchivoExpediente(models.Model):
+    id_documento_de_archivo_exped = models.AutoField(primary_key=True, db_column='T237IdDocumentoDeArchivo_Exped')
+    id_expediente_documental = models.ForeignKey(ExpedientesDocumentales, on_delete=models.CASCADE, db_column='T237Id_ExpedienteDocumental')
+    identificacion_doc_en_expediente = models.CharField(max_length=15, db_column='T237IdentificacionDoc_EnExpediente')
+    nombre_asignado_documento = models.CharField(max_length=100, db_column='T237nombreAsignado_Documento')
+    nombre_original_del_archivo = models.CharField(max_length=100,blank=True,null=True ,db_column='T237nombreOriginalDelArchivo')
+    fecha_creacion_doc	= models.DateTimeField(db_column='T237fechaCreacionDoc')
+    fecha_incorporacion_doc_a_Exp = models.DateTimeField(db_column='T237fechaIncorporacionDocAExp')
+    descripcion	= models.CharField(max_length=200,blank=True,null=True , db_column='T237descripcion')
+    asunto	= models.CharField(max_length=50, db_column='T237asunto')
+    id_persona_titular	= models.ForeignKey('geojson.Personas', related_name='id_persona_titular',blank=True,null=True, on_delete=models.SET_NULL, db_column='T237Id_PersonaTitular')
+    cod_categoria_archivo	= models.CharField(max_length=2, choices=categoria_archivo_CHOICES, db_column='T237codCategoríaArchivo')
+    es_version_original	 = models.BooleanField(default=True, db_column='T237esVersionOriginal')
+    tiene_replica_fisica = models.BooleanField(default=False, db_column='T237tieneReplicaFisica')
+    nro_folios_del_doc	 = models.SmallIntegerField(db_column='T237nroFoliosDelDoc')
+    cod_origen_archivo	= models.CharField(max_length=1, choices=tipo_origen_doc_CHOICES, db_column='T237codOrigenArchivo')
+    orden_en_expediente	 = models.SmallIntegerField(db_column='T237ordenEnExpediente')
+    id_tipologia_documental	= models.ForeignKey(TipologiasDoc,blank=True, null=True , on_delete=models.SET_NULL, db_column='T237Id_TipologiaDocumental')
+    codigo_tipologia_doc_prefijo = models.CharField(max_length=20, blank=True, null=True, db_column='T237codigoTipologiaDoc_Prefijo')
+    codigo_tipologia_doc_agno = models.SmallIntegerField(blank=True, null=True,db_column='T237codigoTipologiaDoc_Agno')
+    codigo_tipologia_doc_consecutivo = models.CharField(max_length=50, blank=True, null=True, db_column='T237codigoTipologiaDoc_Consecutivo')
+    es_un_archivo_anexo = models.BooleanField(default=False, db_column='T237esUnArchivoAnexo')
+    id_doc_de_arch_del_cual_es_anexo =  models.ForeignKey('self', related_name='arch_anexo', on_delete=models.SET_NULL, null=True, blank=True, db_column='T237Id_DocDeArch_DelCualEsAnexo')
+    tipologia_no_creada_trd	 = models.CharField(max_length=50, blank=True, null=True, db_column='T237tipologiaNoCreadaEnTRD')
+    anexo_corresp_a_lista_chequeo	 = models.BooleanField(default=False, db_column='T237anexoCorrespAListaDeChequeo')
+    cantidad_anexos	= models.SmallIntegerField(blank=True, null=True,db_column='T237cantidadDeAnexos')
+    id_archivo_sistema	= models.ForeignKey(ArchivosDigitales, on_delete=models.SET_NULL, null=True, blank=True, db_column='T237Id_ArchivoEnSistema')#falta clase (oskitar)
+    palabras_clave_documento = models.CharField(max_length=255,blank=True,null=True , db_column='T237palabrasClaveDocumento')
+    sub_sistema_incorporacion = models.CharField(max_length=4, choices=tipo_subsistema_creado_CHOICES, db_column='T237subSistemaDeIncorporacion', blank=True, null=True)
+    cod_tipo_radicado = models.CharField(max_length=1, choices=TIPOS_RADICADO_CHOICES,blank=True, null=True, db_column='T237codTipoRadicado')
+    codigo_radicado_prefijo	 = models.CharField(max_length=10,blank=True,null=True ,db_column='T237codigoRadicado_Prefijo')
+    codigo_radicado_agno = models.SmallIntegerField(blank=True,null=True ,db_column='T237codigoRadicado_Agno')
+    codigo_radicado_consecutivo = models.IntegerField(blank=True,null=True, db_column='T237codigoRadicado_Consecutivo')
+    es_radicado_inicial_de_solicitud	= models.BooleanField(blank=True,null=True, db_column='T237esRadicadoInicialDeLaSolicitud')
+    documento_requiere_rta = models.BooleanField(default=False, db_column='T237documentoRequiereRta')
+    creado_automaticamente = models.BooleanField(blank=True, null=True, db_column='T237creadoAutomaticamente')
+    fecha_indexacion_manual_sistema = models.DateTimeField(blank=True, null=True, db_column='T237fechaDeIndexacionManualEnElSistema')
+    anulado = models.BooleanField(blank=True, null=True, db_column='T237anulado')
+    observacion_anulacion = models.CharField(max_length=255, blank=True, null=True, db_column='T237observacionAnulacion')
+    fecha_anulacion = models.DateTimeField(blank=True, null=True, db_column='T237fechaAnulacion')
+    id_persona_anula = models.ForeignKey('geojson.Personas', blank=True, null=True, related_name='id_persona_anula_doc_exp', on_delete=models.SET_NULL, db_column='T237Id_PersonaAnula')
+    id_doc_arch_respondido	 =  models.ForeignKey('self', related_name='arch_respondido', on_delete=models.SET_NULL, null=True, blank=True, db_column='T237Id_DocDeArch_Respondido')
+    id_doc_arch_rad_ini_exp_simple =  models.ForeignKey('self', related_name='id_doc_arch_rad_exp_simple', on_delete=models.SET_NULL, null=True, blank=True, db_column='T237Id_DocDeArch_RadIni_EnExpSimple')
+    id_und_org_oficina_creadora= models.ForeignKey(UnidadesOrganizacionales, related_name='id_und_org_oficina_creadora',on_delete=models.CASCADE, db_column='T237Id_UndOrgOficina_Creadora')
+    id_persona_que_crea	= models.ForeignKey('geojson.Personas', related_name='id_persona_que_crea',on_delete=models.CASCADE, db_column='T237Id_PersonaQueCrea')
+    id_und_org_oficina_respon_actual = models.ForeignKey(UnidadesOrganizacionales,related_name='id_und_org_oficina_respon_actual', on_delete=models.CASCADE, db_column='T237Id_UndOrgOficinaRespon_Actual')
+
+    def __str__(self):
+        return str(self.id_documento_de_archivo_exped)
+    
+    class Meta:
+            db_table = 'T237DocumentosDeArchivo_Expediente'
+            verbose_name = 'Documento De Archivo'
+            verbose_name_plural = 'Documentos De Archivos'
+            unique_together = [('id_expediente_documental', 'identificacion_doc_en_expediente')]

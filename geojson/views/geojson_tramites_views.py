@@ -6,7 +6,7 @@ from rest_framework.permissions import IsAuthenticated
 from geojson.utils import UtilsGeoJson
 from geojson.models.tramites_models import PermisosAmbSolicitudesTramite
 
-class GeoJsonConcesionAguasSuperficialesView(generics.ListAPIView):
+class GeoJsonDeterminantesAmbientalesView(generics.ListAPIView):
     # permission_classes = [IsAuthenticated,]
 
     def get(self, request):
@@ -25,20 +25,62 @@ class GeoJsonConcesionAguasSuperficialesView(generics.ListAPIView):
                         "coordinates": [tramite_sasoftco['longitud'], tramite_sasoftco['latitud']]
                     },
                     "properties": {
-                        "municipio": tramite.id,
-                        "tipo_determinante": tramite_sasoftco['nombre'],
-                        "tipo_elementos_proteccion": tramite_sasoftco['tipo'],
-                        "nombre_geografico": tramite.fecha_creacion,
-                        "area": tramite.estado,
-                        #"latitud": tramite_sasoftco['latitud'],
-                        #"longitud": tramite_sasoftco['longitud'],
+                        "municipio": tramite_sasoftco['MunPredio'],
+                        "tipo_determinante": tramite_sasoftco['typeProcedure'],
+                        "tipo_elementos_proteccion": tramite_sasoftco['Area'],
+                        #"nombre_geografico": tramite.fecha_creacion, validar
+                        #"area": tramite_sasoftco['ConceptP3'], Validar
+                        "latitud": tramite_sasoftco['UbiEcosis'].split(',')[0],
+                        "longitud": tramite_sasoftco['UbiEcosis'].split(',')[1],
                         "expediente": tramite_sasoftco['NumExp'],
-                        "usuario": tramite.id_usuario.username,
-                        "resolucion": tramite_sasoftco['NumResol'],
-                        "fecha_resolucion": tramite_sasoftco['Fecha_Resolu'],
-                        "estado": tramite.id_permiso_ambiental.estado,
+                        "usuario": UtilsGeoJson.get_nombre_persona(tramite.id_solicitud_tramite.id_persona_titular),
+                        #"resolucion": tramite_sasoftco['NumResol'], Validar
+                        #"fecha_resolucion": tramite_sasoftco['Fecha_Resolu'], Validar
+                        "estado": tramite.id_solicitud_tramite.id_estado_actual_solicitud.nombre,
                     }
                 }
+
+                hectareas = tramite_sasoftco['Levant_Catastral'] * 0.0001
+                GeoJson['properties']['area'] = hectareas
+                GeoJson_list.append(GeoJson)
+
+        return Response(GeoJson_list)
+    
+
+class GeoJsonCertificacionAmbientalDesintegracionVehicularView(generics.ListAPIView):
+    # permission_classes = [IsAuthenticated,]
+
+    def get(self, request):
+        tramites = PermisosAmbSolicitudesTramite.objects.filter(id_permiso_ambiental__cod_tipo_permiso_ambiental = 'CE', id_permiso_ambiental__nombre__icontains = 'Certificación ambiental para la desintegración vehicular')
+
+        GeoJson_list = []
+
+        for tramite in tramites:
+            tramite_sasoftco = UtilsGeoJson.get_tramite_sasoftco(tramite)
+
+            if tramite_sasoftco:
+                GeoJson = {
+                    "Feature": tramite.id_permiso_ambiental.get_cod_tipo_permiso_ambiental_display(),
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [tramite_sasoftco['longitud'], tramite_sasoftco['latitud']]
+                    },
+                    "properties": {
+                        "usuario": UtilsGeoJson.get_nombre_persona(tramite.id_solicitud_tramite.id_persona_titular),
+                        #"resolucion": tramite_sasoftco['NumResol'], Validar
+                        "expediente": tramite_sasoftco['NumExp'],
+                        "vigencia": tramite_sasoftco['Vigencia'], #Validar
+                        "fecha_expedicion_resolucion": tramite_sasoftco['Fecha_Resolu'], #Validar
+                        "municipio": tramite_sasoftco['MunPredio'],
+                        "fecha_inicio_vigencia": tramite_sasoftco['FechaIniVig'], #Validar
+                        "latitud": tramite_sasoftco['UbiEcosis'].split(',')[0],
+                        "longitud": tramite_sasoftco['UbiEcosis'].split(',')[1],
+                        "nombre_proyecto": tramite_sasoftco['nameProject'],
+                    }
+                }
+
+                hectareas = tramite_sasoftco['Levant_Catastral'] * 0.0001
+                GeoJson['properties']['area'] = hectareas
                 GeoJson_list.append(GeoJson)
 
         return Response(GeoJson_list)

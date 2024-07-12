@@ -2,7 +2,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from seguridad.models import Roles, UsuariosRol,User, UsuariosRol
-from transversal.models.personas_models import Personas
+from geojson.models.personas_models import Personas
 from rest_framework import status
 from seguridad.serializers.roles_serializers import RolesSerializer, UsuarioRolesSerializers,RolesByIdUsuarioSerializer
 from seguridad.serializers.user_serializers import UsuarioRolesLookSerializers

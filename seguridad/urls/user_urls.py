@@ -4,34 +4,20 @@ from rest_framework_simplejwt.views import (TokenRefreshView)
 
 urlpatterns = [
     
-    path('login/', views.LoginApiView.as_view(), name='token_obtain_pair'),
+    # path('login/', views.LoginApiView.as_view(), name='token_obtain_pair'),
     path('upload/', views.uploadImage, name="image-upload"),
     path('recuperar-nombre-usuario/',views.RecuperarNombreDeUsuario.as_view(),name='recuperar-nombre-de-usuario'),
-
-    path('register/', views.RegisterView.as_view(), name='register'),
-    path('register-externo/', views.RegisterExternoView.as_view(), name='register-externo'),
-    path('update/<str:pk>/', views.UpdateUser.as_view(), name='register-users'),
     
     path('profile/', views.getUserProfile, name="users-profile"),
-    path('profile/update/', views.UpdateUserProfile.as_view(), name="profile-update"),
    
     path('roles/', views.roles, name='roles'),
     path("get/", views.getUsers, name="get-users"),
-    path('verify/', views.Verify.as_view(), name='verify'),
     path("get/<str:pk>/", views.getUserById, name="get-users"), 
-    path('get-by-numero-documento/<str:keyword1>/<str:keyword2>/', views.GetUserByPersonDocument.as_view(), name='get-users-by-doc'),
-    path('get-by-email/<str:email>/', views.GetUserByEmail.as_view(), name='get-user-by-email-person'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('password-reset/<str:uidb64>/<token>/', views.PasswordTokenCheckApi.as_view(), name='password-reset-confirm'),
-    path('request-reset-email/', views.RequestPasswordResetEmail.as_view(),name='request-reset-email'),
     path('pasword-reset-complete', views.SetNewPasswordApiView.as_view(),name='pasword-reset-complete'), 
-    path('delegate-rol-super-usuario/<str:id_persona>/', views.AsignarRolSuperUsuario.as_view(), name='delegar-rol-super-usuario'),
-    path('get-nuevo-super-usuario/<str:tipo_documento>/<str:numero_documento>/', views.GetNuevoSuperUsuario.as_view(), name='get-nuevo-super-usuario'),
-    path('get-nuevo-super-usuario-filters/', views.GetNuevoSuperUsuarioFilters.as_view(),name='get-nuevo-super-usuario-filters'),
     path('get-user-by-nombre-de-usuario/',views.BusquedaByNombreUsuario.as_view(),name='get-user-by-nombre-de-usuario'),
     path('get-buscar-by-id-persona/<str:id_persona>/',views.BuscarByIdPersona.as_view(),name='get-buscar-id-persona'),
     path('get-by-pk/<str:id_usuario>/',views.GetByIdUsuario.as_view(),name='get-by-pk'),
-    path('unblock/', views.UnblockUser.as_view(), name='unblock-user'),
     path('password-unblock-complete/', views.UnBlockUserPassword.as_view(), name='password-unblock-complete'),
     path('reenviar-correo-verificacion-usuario/<str:id_usuario>/', views.ReenviarCorreoVerificacionDeUsuario.as_view(), name='reenviar-correo-verificacion-usuario'),
 

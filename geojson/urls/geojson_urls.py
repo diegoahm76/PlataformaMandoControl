@@ -7,4 +7,9 @@ urlpatterns=[
 
     #Tramites
     path('tramite/conc_aguas/get/',tramites_views.GeoJsonConcesionAguasSuperficialesView.as_view(),name='geojson-concesion-aguas'),
+
+    #Estaciones
+    path('geojson/estaciones/get/', estaciones_views.GeoJsonEstacionesView.as_view(), name='geojson-estaciones'),
+
+
 ]

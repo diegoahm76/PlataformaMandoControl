@@ -7,7 +7,7 @@ from rest_framework.exceptions import NotFound
 
 class UtilsGeoJson:
     @staticmethod
-    def get_tramite_sasoftco(self, tramite):
+    def get_tramite_sasoftco(tramite):
         cadena = ""
         radicado = tramite.id_solicitud_tramite.id_radicado
         organized_data = {}
@@ -37,3 +37,16 @@ class UtilsGeoJson:
                 raise NotFound('No se encontró el detalle del trámite elegido')
             
         return organized_data
+    
+    @staticmethod
+    def get_nombre_persona(persona):
+        nombre_completo_persona = None
+        if persona.tipo_persona == 'J':
+            nombre_completo_persona = persona.razon_social
+        else:
+            nombre_list = [persona.primer_nombre, persona.segundo_nombre,
+                            persona.primer_apellido, persona.segundo_apellido]
+            nombre_completo_persona = ' '.join(item for item in nombre_list if item is not None)
+            nombre_completo_persona = nombre_completo_persona if nombre_completo_persona != "" else None
+            
+        return nombre_completo_persona

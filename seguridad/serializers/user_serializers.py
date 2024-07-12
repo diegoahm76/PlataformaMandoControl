@@ -7,8 +7,7 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from rest_framework.exceptions import AuthenticationFailed
 from rest_framework_simplejwt.tokens import RefreshToken
 from seguridad.models import OperacionesSobreUsuario, User, UsuariosRol, HistoricoActivacion,Login,LoginErroneo,PermisosModuloRol
-from transversal.models.personas_models import Personas
-from transversal.serializers.personas_serializers import PersonasSerializer
+from geojson.models.personas_models import Personas
 from seguridad.serializers.permisos_serializers import PermisosModuloRolSerializer
 import re
 from seguridad.utils import Util
@@ -41,42 +40,6 @@ class UsuarioCreadorSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
-
-class UserSerializer(serializers.ModelSerializer):
-    _id = serializers.SerializerMethodField(read_only=True)
-    isAdmin = serializers.SerializerMethodField(read_only=True)
-    id_usuario_creador = UsuarioCreadorSerializer(read_only=True)
-    persona = PersonasSerializer(read_only=True)
-    usuario_rol = UserRolesSerializer(read_only=True)
-    
-
-    class Meta:
-        model = User
-        fields = '__all__'
-
-    def get_usuario_rol(self, obj):
-        rol = obj.usuariosrol_set.all()
-        serializer = UserRolesSerializer(rol, many=True)
-        return serializer.data
-
-    def get__id(self, obj):
-        return obj.id_usuario
-
-    def get_isAdmin(self, obj):
-        return obj.is_staff
-
-    def get_usuario_creador(self,obj):
-        usuario_creador= obj.id_usuario_creador
-        serializer = UsuarioCreadorSerializer(usuario_creador,many=True)
-        return serializer.data
-    
-    def create(self, validated_data):
-        usuario_creador = validated_data.pop('usuario_creador')
-        user_instance = User.objects.create(**validated_data)
-        for user in usuario_creador:
-            User.objects.create(user=user_instance,**user)
-        return user_instance
-
 class UserPutSerializer(serializers.ModelSerializer):
     password = serializers.CharField(required=False)
     profile_img = serializers.ReadOnlyField(source='id_archivo_foto.ruta_archivo.url', default=None)
@@ -192,24 +155,7 @@ class RegisterExternoSerializer(serializers.ModelSerializer):
         model = User
         fields = ['nombre_de_usuario', 'persona', 'password','redirect_url','creado_por_portal','is_active']
 
-class UserSerializerWithToken(UserSerializer):
-    token = serializers.SerializerMethodField(read_only=True)
-
-    class Meta:
-        model = User
-        fields = "__all__"
-
-    def get_token(self, obj):
-        token = RefreshToken.for_user(obj)
-        return str(token.access_token)
-
 from seguridad.models import Login,LoginErroneo
-
-class LoginSerializers(serializers.ModelSerializer):
-    id_usuario=UserSerializer(read_only=True)
-    class Meta:
-        model=Login
-        fields= '__all__'
 
 class LoginSerializer(serializers.ModelSerializer):
 
@@ -297,12 +243,6 @@ class LoginPostSerializers(serializers.ModelSerializer):
                 'dispositivo_conexion': {'required': True},
                 'fecha_login': {'required': True},
             }
-        
-class LoginErroneoSerializers(serializers.ModelSerializer):
-    id_usuario=UserSerializer(read_only=True)
-    class Meta:
-        model=LoginErroneo
-        fields= '__all__'
 
 class LoginErroneoPostSerializers(serializers.ModelSerializer):
     restantes = serializers.IntegerField(read_only=True)

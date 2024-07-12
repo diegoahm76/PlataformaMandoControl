@@ -14,7 +14,8 @@ class Organigramas(models.Model):
     justificacion_nueva_version = models.CharField(max_length=255, null=True, blank=True, db_column='T017justificacionNuevaVersion')
     version = models.CharField(max_length=10, unique=True, db_column='T017version')
     actual = models.BooleanField(default=False, db_column='T017actual')
-    ruta_resolucion = models.ForeignKey('geojson.ArchivosDigitales', on_delete=models.SET_NULL, blank=True, null=True, db_column='T017rutaResolucion')
+    # ruta_resolucion = models.ForeignKey('geojson.ArchivosDigitales', on_delete=models.SET_NULL, blank=True, null=True, db_column='T017rutaResolucion')
+    ruta_resolucion = models.IntegerField(blank=True, null=True, db_column='T017rutaResolucion')
     id_persona_cargo = models.ForeignKey("geojson.Personas",on_delete=models.SET_NULL,blank=True,null=True,db_column='T017IdPersonaACargo')
     
     def __str__(self):

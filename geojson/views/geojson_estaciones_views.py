@@ -8,8 +8,6 @@ from geojson.utils import UtilsGeoJson
 from geojson.models.tramites_models import SolicitudesTramites, PermisosAmbientales, PermisosAmbSolicitudesTramite
 from geojson.models.estaciones_models import Estaciones
 
-
-
 class GeoJsonEstacionesView(generics.ListAPIView):
     def get(self, request):
         estaciones = Estaciones.objects.all()

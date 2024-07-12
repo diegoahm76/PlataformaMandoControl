@@ -39,3 +39,37 @@ class GeoJsonInscripcionDGAView(generics.ListAPIView):
             GeoJson_list.append(GeoJson)
 
         return Response(GeoJson_list)
+    
+
+class GeoJsonFormulacionProyectosEscolaresView(generics.ListAPIView):
+    # permission_classes = [IsAuthenticated,]
+
+    def get(self, request):
+        opas = PermisosAmbSolicitudesTramite.objects.filter(id_permiso_ambiental__cod_tipo_permiso_ambiental = 'OP', id_permiso_ambiental__nombre__icontains = 'Apoyo formulación e implementación de proyectos ambientales escolares')
+
+        GeoJson_list = []
+
+        for opa in opas:
+
+            GeoJson = {
+                "type": "Feature",
+                "id": opa.id_solicitud_tramite.id_solicitud_tramite,
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [opa.coordenada_x, opa.coordenada_y]
+                },
+                "properties": {
+                    "OBJECTID": opa.id_solicitud_tramite.id_solicitud_tramite,
+                    "Municipio": opa.cod_municipio.nombre,
+                    "Nombre_Colegio": "Validar", # VALIDAR
+                    "Nombre_PRAE": "Validar", # VALIDAR
+                    "latitud": opa.coordenada_x,
+                    "longitud": opa.coordenada_y,
+                    "Persona_Encargado": UtilsGeoJson.get_nombre_persona(opa.id_solicitud_tramite.id_persona_titular),
+                    "Actividades_Realizadas": "Validar", # VALIDAR
+                    "Fecha_Inscripcion": opa.id_solicitud_tramite.fecha_registro.date(),
+                }
+            }
+            GeoJson_list.append(GeoJson)
+
+        return Response(GeoJson_list)

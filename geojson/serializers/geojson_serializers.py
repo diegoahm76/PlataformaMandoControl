@@ -1,8 +1,26 @@
 from datetime import datetime
-from estaciones.models.estaciones_models import Estaciones, PersonasEstacionesEstacion
+from geojson.models.estaciones_models import Estaciones, PersonasEstacionesEstacion, PersonasEstaciones
 from rest_framework import serializers
-from estaciones.serializers.personas_estaciones_serializers import PersonasEstacionesSerializer
-from transversal.models.personas_models import Personas
+from geojson.models.personas_models import Personas
+
+# from estaciones.models.estaciones_models import Estaciones, PersonasEstacionesEstacion
+# from estaciones.serializers.personas_estaciones_serializers import PersonasEstacionesSerializer
+# from transversal.models.personas_models import Personas
+
+
+class PersonasEstacionesSerializer(serializers.ModelSerializer):
+    
+    def create(self, validated_data):
+        Modelclass= PersonasEstaciones
+        try:
+            instance=Modelclass.objects.db_manager("bia-estaciones").create(**validated_data)
+        except TypeError:
+            raise TypeError()
+        return instance
+
+    class Meta:
+        model=PersonasEstaciones
+        fields='__all__'
 
 
 class EstacionesSerializer(serializers.ModelSerializer):

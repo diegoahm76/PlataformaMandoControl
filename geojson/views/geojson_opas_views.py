@@ -38,7 +38,18 @@ class GeoJsonInscripcionDGAView(generics.ListAPIView):
             }
             GeoJson_list.append(GeoJson)
 
-        return Response(GeoJson_list)
+        geojson_final = {
+            "type": "FeatureCollection",
+            "crs": { 
+                "type": "name", 
+                "properties": { 
+                    "name": "EPSG:4326" 
+                } 
+            },
+            "features": GeoJson_list
+        }
+
+        return Response(geojson_final)
     
 
 class GeoJsonFormulacionProyectosEscolaresView(generics.ListAPIView):

@@ -10,6 +10,8 @@ urlpatterns=[
 
     #Opas
     path('opa/inscripcion_dga/get/',opas_views.GeoJsonInscripcionDGAView.as_view(),name='geojson-inscripcion-dga'),
+    path('opa/inscripcion_generador_rcd/get/',opas_views.GeoJsonInscripcionGeneradorRCDView.as_view(),name='geojson-inscripcion-generador-rcd'),
+    path('opa/inscripcion_generador_acu/get/',opas_views.GeoJsonInscripcionGeneradorACUView.as_view(),name='geojson-inscripcion-generador-acu'),
     path('opa/formulacion_proyectos_escolares/get/',opas_views.GeoJsonFormulacionProyectosEscolaresView.as_view(),name='geojson-formulacion-proyectos-escolares'),
 
 

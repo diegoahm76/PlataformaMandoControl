@@ -11,7 +11,7 @@ from geojson.models.personas_models import Personas
 
 class GeoJsonEstacionesView(generics.ListAPIView):
     def get(self, request):
-        estaciones = Estaciones.objects.all().using("bia-estaciones")
+        estaciones = Estaciones.objects.all().order_by("id_estacion").using("bia-estaciones")
         datos = Datos.objects.all().order_by("-fecha_registro").using("bia-estaciones")
         persona = Personas.objects.all()
 
@@ -28,58 +28,95 @@ class GeoJsonEstacionesView(generics.ListAPIView):
                 if persona_modifica is not None:
                     nombre_persona = ' '.join(filter(None, [persona_modifica.primer_nombre, persona_modifica.segundo_nombre, persona_modifica.primer_apellido, persona_modifica.segundo_apellido]))
                 
-            if datos_estacion is not None:
-                GeoJson = {
-                    "type": "Feature",
-                    "geometry": {
-                        "type": "Point",
-                        "coordinates": [float(estacion.longitud), float(estacion.latitud)]
-                    },
-                    "properties": {
-                        "id_estacion": estacion.id_estacion,
-                        "nombre_estacion": estacion.nombre_estacion,
-                        "cod_tipo_estacion": estacion.cod_tipo_estacion,
-                        "cod_municipio": estacion.cod_municipio,
-                        "indicaciones_ubicacion": estacion.indicaciones_ubicacion,
-                        "fecha_modificacion": estacion.fecha_modificacion,
-                        "fecha_modificacion_coordenadas": estacion.fecha_modificacion_coordenadas,
-                        "id_persona_modifica": estacion.id_persona_modifica,
-                        "nombre_persona_modifica": nombre_persona,
-                        "fecha_registro": datos_estacion.fecha_registro,
-                        "temperatura_ambiente": datos_estacion.temperatura_ambiente,
-                        "humedad_ambiente": datos_estacion.humedad_ambiente,
-                        "presion_barometrica": datos_estacion.presion_barometrica,
-                        "velocidad_viento": datos_estacion.velocidad_viento,
-                        "direccion_viento": datos_estacion.direccion_viento,
-                        "precipitacion": datos_estacion.precipitacion,
-                        "luminosidad": datos_estacion.luminosidad,
-                        "nivel_agua": datos_estacion.nivel_agua,
-                        "velocidad_agua": datos_estacion.velocidad_agua,
-                    }
+            GeoJson = {
+                "type": "Feature",
+                "id": estacion.id_estacion,
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [float(estacion.longitud), float(estacion.latitud)]
+                },
+                "properties": {
+                    "id_estacion": estacion.id_estacion,
+                    "nombre_estacion": estacion.nombre_estacion,
+                    "cod_tipo_estacion": estacion.cod_tipo_estacion,
+                    "cod_municipio": estacion.cod_municipio if estacion.cod_municipio is not None else " ",
+                    "indicaciones_ubicacion": estacion.indicaciones_ubicacion if estacion.indicaciones_ubicacion is not None else " ",
+                    "fecha_modificacion": estacion.fecha_modificacion if estacion.fecha_modificacion is not None else " ",
+                    "fecha_modificacion_coordenadas": estacion.fecha_modificacion_coordenadas if estacion.fecha_modificacion_coordenadas is not None else " ",
+                    "id_persona_modifica": estacion.id_persona_modifica if estacion.id_persona_modifica is not None else " ",
+                    "nombre_persona_modifica": nombre_persona if nombre_persona is not None else " ",
+                    "fecha_registro": datos_estacion.fecha_registro if datos_estacion is not None else " ",
+                    "temperatura_ambiente": f'{datos_estacion.temperatura_ambiente} °C' if datos_estacion is not None else "0.00 °C",
+                    "humedad_ambiente": f'{datos_estacion.humedad_ambiente} %' if datos_estacion is not None else "0.00 %",
+                    "presion_barometrica": f'{datos_estacion.presion_barometrica} hPa' if datos_estacion is not None else "0.00 hPa",
+                    "velocidad_viento": f'{datos_estacion.velocidad_viento} m/s' if datos_estacion is not None else "0.00 m/s",
+                    "direccion_viento": f'{datos_estacion.direccion_viento}°' if datos_estacion is not None else "0.00°",
+                    "precipitacion": f'{datos_estacion.precipitacion} mm' if datos_estacion is not None else "0.00 mm",
+                    "luminosidad": f'{datos_estacion.luminosidad} Lux' if datos_estacion is not None else "0.00 Lux",
+                    "nivel_agua": f'{datos_estacion.nivel_agua} m' if datos_estacion is not None else "0.00 m",
+                    "velocidad_agua": f'{datos_estacion.velocidad_agua} m/s' if datos_estacion is not None else "0.00 m/s",
                 }
-                GeoJson_list.append(GeoJson)
-            else:
-                GeoJson = {
-                    "type": "Feature",
-                    "geometry": {
-                        "type": "Point",
-                        "coordinates": [float(estacion.longitud), float(estacion.latitud)]
-                    },
-                    "properties": {
-                        "id_estacion": estacion.id_estacion,
-                        "nombre_estacion": estacion.nombre_estacion,
-                        "cod_tipo_estacion": estacion.cod_tipo_estacion,
-                        "cod_municipio": estacion.cod_municipio,
-                        "indicaciones_ubicacion": estacion.indicaciones_ubicacion,
-                        "fecha_modificacion": estacion.fecha_modificacion,
-                        "fecha_modificacion_coordenadas": estacion.fecha_modificacion_coordenadas,
-                        "id_persona_modifica": estacion.id_persona_modifica,
-                        "nombre_persona_modifica": nombre_persona,
-                    }
-                }
-                GeoJson_list.append(GeoJson)
+            }
 
-        return Response({
+            GeoJson_list.append(GeoJson)
+
+        geojson_final = {
             "type": "FeatureCollection",
+            "crs": { 
+                "type": "name", 
+                "properties": { 
+                    "name": "EPSG:4326" 
+                } 
+            },
             "features": GeoJson_list
-        })
+        }
+
+        return Response(geojson_final)
+    
+
+class GeoJsonEstacionesViewDetail(generics.RetrieveAPIView):
+    def get(self, request):
+
+        datos_all = Datos.objects.all().order_by("id_estacion", "-fecha_registro").using("bia-estaciones")
+
+        GeoJson_list = []
+
+        for datos in datos_all:
+            GeoJson = {
+            "type": "Feature",
+            "id": datos.id_data,
+            "geometry": {
+                "type": "Point",
+                "coordinates": [float(datos.id_estacion.longitud), float(datos.id_estacion.latitud)]
+            },
+            "properties": {
+                "id_estacion": datos.id_estacion.id_estacion,
+                "fecha_registro": datos.fecha_registro if datos is not None else " ",
+                "temperatura_ambiente": f'{datos.temperatura_ambiente} °C' if datos.temperatura_ambiente is not None else "0.00 °C",
+                "humedad_ambiente": f'{datos.humedad_ambiente} %' if datos.humedad_ambiente is not None else "0.00 %",
+                "presion_barometrica": f'{datos.presion_barometrica} hPa' if datos.presion_barometrica is not None else "0.00 hPa",
+                "velocidad_viento": f'{datos.velocidad_viento} m/s' if datos.velocidad_viento is not None else "0.00 m/s",
+                "direccion_viento": f'{datos.direccion_viento}°' if datos.direccion_viento is not None else "0.00°",
+                "precipitacion": f'{datos.precipitacion} mm' if datos.precipitacion is not None else "0.00 mm",
+                "luminosidad": f'{datos.luminosidad} Lux' if datos.luminosidad is not None else "0.00 Lux",
+                "nivel_agua": f'{datos.nivel_agua} m' if datos.nivel_agua is not None else "0.00 m",
+                "velocidad_agua": f'{datos.velocidad_agua} m/s' if datos.velocidad_agua is not None else "0.00 m/s",
+            }
+            }
+
+            GeoJson_list.append(GeoJson)
+
+        geojson_final = {
+            "type": "FeatureCollection",
+            "crs": { 
+            "type": "name", 
+            "properties": { 
+                "name": "EPSG:4326" 
+            } 
+            },
+            "features": GeoJson_list
+        }
+
+        return Response(geojson_final)
+   
+

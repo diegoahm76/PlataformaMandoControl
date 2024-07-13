@@ -20,4 +20,5 @@ urlpatterns=[
 
     #Estaciones
     path('estaciones/get/',estaciones_views.GeoJsonEstacionesView.as_view(),name='geojson-estaciones'),
+    path('estaciones-datos/get/',estaciones_views.GeoJsonEstacionesViewDetail.as_view(),name='geojson-estaciones-datos'),
 ]

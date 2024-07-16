@@ -84,3 +84,123 @@ class GeoJsonCertificacionAmbientalDesintegracionVehicularView(generics.ListAPIV
                 GeoJson_list.append(GeoJson)
 
         return Response(GeoJson_list)
+    
+
+class GeoJsonInscripcionGestorRCDView(generics.ListAPIView):
+    # permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        tramites = PermisosAmbSolicitudesTramite.objects.filter(id_permiso_ambiental__cod_tipo_permiso_ambiental = 'RE', id_permiso_ambiental__nombre__icontains = 'Registro de inscripción como gestor de residuos de construcción y demolición')
+
+        GeoJson_list = []
+
+        for tramite in tramites:
+            tramite_sasoftco = UtilsGeoJson.get_tramite_sasoftco(tramite)
+
+            if tramite_sasoftco:
+                GeoJson = {
+                    "Feature": tramite.id_permiso_ambiental.get_cod_tipo_permiso_ambiental_display(),
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [tramite.coordenada_x, tramite.coordenada_y]
+                    },
+                    "properties": {
+                        "usuario": UtilsGeoJson.get_nombre_persona(tramite.id_solicitud_tramite.id_persona_titular),
+                        "municipio": tramite_sasoftco['Municipio'],
+                        "nombre_proyecto": tramite_sasoftco['nameProject'],
+                        "Latitud": tramite.coordenada_x,
+                        "longitud": tramite.coordenada_y,
+                        "fecha_incio_obra": tramite_sasoftco['FReserva_Inicial'],
+                        "fecha_estimada_finalizacion": tramite_sasoftco['FReserva_Final'],
+                        "rcd_susceptibles_aprovechamiento": tramite_sasoftco['procesoaprovechamiento'],#Validar
+                        # "rcd_no_susceptibles_aprovechamiento": tramite_sasoftco['procesoaprovechamiento'],#Validar
+                        "Fecha_Inscripcion": tramite.id_solicitud_tramite.fecha_registro.date(),
+
+                        
+                      
+                    }
+                }
+
+                GeoJson_list.append(GeoJson)
+
+        return Response(GeoJson_list)
+    
+
+class GeoJsonLicenciaAmbientalTransElectricaView(generics.ListAPIView):
+    # permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        tramites = PermisosAmbSolicitudesTramite.objects.filter(id_permiso_ambiental__cod_tipo_permiso_ambiental = 'LA', id_permiso_ambiental__nombre__icontains = 'Licencias de líneas de transferencia eléctrica')
+
+        GeoJson_list = []
+
+        for tramite in tramites:
+            tramite_sasoftco = UtilsGeoJson.get_tramite_sasoftco(tramite)
+
+            if tramite_sasoftco:
+                GeoJson = {
+                    "Feature": tramite.id_permiso_ambiental.get_cod_tipo_permiso_ambiental_display(),
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [tramite.coordenada_x, tramite.coordenada_y]
+                    },
+                    "properties": {
+                        # "usuario": UtilsGeoJson.get_nombre_persona(tramite.id_solicitud_tramite.id_persona_titular),
+                        # "municipio": tramite_sasoftco['Municipio'],
+                        # "nombre_proyecto": tramite_sasoftco['nameProject'],
+                        # "Latitud": tramite.coordenada_x,
+                        # "longitud": tramite.coordenada_y,
+                        # "fecha_incio_obra": tramite_sasoftco['FReserva_Inicial'],
+                        # "fecha_estimada_finalizacion": tramite_sasoftco['FReserva_Final'],
+                        # "rcd_susceptibles_aprovechamiento": tramite_sasoftco['procesoaprovechamiento'],#Validar
+                        # # "rcd_no_susceptibles_aprovechamiento": tramite_sasoftco['procesoaprovechamiento'],#Validar
+                        # "Fecha_Inscripcion": tramite.id_solicitud_tramite.fecha_registro.date(),
+
+                        
+                      
+                    }
+                }
+
+                GeoJson_list.append(GeoJson)
+
+        return Response(GeoJson_list)
+
+
+class GeoJsonPermisoOcupacionCaucePlayaLechosView(generics.ListAPIView):
+    # permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        tramites = PermisosAmbSolicitudesTramite.objects.filter(id_permiso_ambiental__cod_tipo_permiso_ambiental = 'PE', id_permiso_ambiental__nombre__icontains = 'Permiso de ocupación de cauce, playa y lechos')
+
+        GeoJson_list = []
+
+        for tramite in tramites:
+            tramite_sasoftco = UtilsGeoJson.get_tramite_sasoftco(tramite)
+
+            if tramite_sasoftco:
+                GeoJson = {
+                    "Feature": tramite.id_permiso_ambiental.get_cod_tipo_permiso_ambiental_display(),
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [tramite.coordenada_x, tramite.coordenada_y]
+                    },
+                    "properties": {
+                        "usuario": UtilsGeoJson.get_nombre_persona(tramite.id_solicitud_tramite.id_persona_titular),
+                        "nro_matricula": tramite_sasoftco['MatriInmobi'],
+                        "Latitud": tramite.coordenada_x,
+                        "longitud": tramite.coordenada_y,
+                        "municipio": tramite_sasoftco['Municipio'],
+                        "nombre_proyecto": tramite_sasoftco['nameProject'],
+                        "expediente": tramite_sasoftco['NumExp'],
+                        "resolucion": tramite_sasoftco['resolucionFinal'],
+                        "fecha_expedicion": tramite_sasoftco['Fecha_resolucion'],
+                        "fecha_inicio_vigencia": tramite_sasoftco['FReserva_Inicial'],
+                        "fecha_final_vigencia": tramite_sasoftco['FReserva_Final'],
+                    }
+                }
+
+                GeoJson_list.append(GeoJson)
+
+        return Response(GeoJson_list)
+
+

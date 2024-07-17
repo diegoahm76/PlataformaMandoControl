@@ -2,11 +2,13 @@ from django.urls import path
 from geojson.views import geojson_estaciones_views as estaciones_views
 from geojson.views import geojson_tramites_views as tramites_views
 from geojson.views import geojson_opas_views as opas_views
+from geojson.views import geojson_permisosmenores_views as permisosmenores_views
 
 urlpatterns=[
 
     #Tramites
     path('tramite/DM/get/',tramites_views.GeoJsonDeterminantesAmbientalesView.as_view(),name='geojson-determinantes-ambientales'),
+    path('tramite/CE/get/',tramites_views.GeoJsonCertificacionAmbientalDesintegracionVehicularView.as_view(),name='geojson-certificacion-ambiental-desintegracion-vehicular'),
     path('tramite/inscripcion_gestor_rcd/get/',tramites_views.GeoJsonInscripcionGestorRCDView.as_view(),name='geojson-inscripcion-generador-rcd'),
     path('tramite/licencia_ambiental_transferencia_electrica/get/',tramites_views.GeoJsonLicenciaAmbientalTransElectricaView.as_view(),name='geojson-licencia-ambiental-transferencia-eléctrica'),
     path('tramite/permiso_ocupación_cauce_playa_y_lechos/get/',tramites_views.GeoJsonPermisoOcupacionCaucePlayaLechosView.as_view(),name='geojson-permiso-ocupación-cauce-playa-y-lechos'),
@@ -17,9 +19,19 @@ urlpatterns=[
     path('opa/inscripcion_generador_acu/get/',opas_views.GeoJsonInscripcionGeneradorACUView.as_view(),name='geojson-inscripcion-generador-acu'),
     path('opa/inscripcion_gestion_acu/get/',opas_views.GeoJsonInscripcionGestionACUView.as_view(),name='geojson-inscripcion-gestion-acu'),
     path('opa/formulacion_proyectos_escolares/get/',opas_views.GeoJsonFormulacionProyectosEscolaresView.as_view(),name='geojson-formulacion-proyectos-escolares'),
+    path('opa/inscripcion_generador_residuos/get/',opas_views.GeoJsonInscripcionGeneradorResiduosView.as_view(),name='geojson-inscripcion-generador-residuos'),
+    path('opa/registro_inventario_nacional/get/',opas_views.GeoJsonRegistroInventarioNacionalView.as_view(),name='geojson-registro-inventario-nacional'),
+    path('opa/registro_unico_ambiental_RUA/get/',opas_views.GeoJsonRegistroUnicoAmbientalRUAView.as_view(),name='geojson-registro-unico-ambiental-RUA'),
+    path('opa/salvoconducto_movilizacion/get/',opas_views.GeoJsonSalvoconductoMovilizacionEspecimenesView.as_view(),name='geojson-salvoconducto-movilizacion'),
+    path('opa/negocios_verdes/get/',opas_views.GeoJsonNegociosVerdesView.as_view(),name='geojson-negocios-verdes'),
+
 
 
     #Estaciones
     path('estaciones/get/',estaciones_views.GeoJsonEstacionesView.as_view(),name='geojson-estaciones'),
-    path('estaciones-datos/get/',estaciones_views.GeoJsonEstacionesViewDetail.as_view(),name='geojson-estaciones-datos'),
+    path('estaciones_datos/get/',estaciones_views.GeoJsonEstacionesViewDetail.as_view(),name='geojson-estaciones-datos'),
+
+    #Permisos Menores
+    path('PM/Certificacion_inscripcion_control/get/',permisosmenores_views.GeoJsonCertificacionInscripcionControlView.as_view(),name='geojson-certificacion-inscripcion-control'),
+    
 ]

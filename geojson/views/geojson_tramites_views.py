@@ -19,10 +19,11 @@ class GeoJsonDeterminantesAmbientalesView(generics.ListAPIView):
 
             if tramite_sasoftco:
                 GeoJson = {
-                    "Feature": tramite.id_permiso_ambiental.get_cod_tipo_permiso_ambiental_display(),
+                    "type": "Feature",
+                    "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [tramite_sasoftco['longitud'], tramite_sasoftco['latitud']]
+                        "coordinates": [tramite_sasoftco['UbiEcosis'].split(',')[0], tramite_sasoftco['UbiEcosis'].split(',')[1]]
                     },
                     "properties": {
                         "municipio": tramite_sasoftco['MunPredio'],
@@ -44,7 +45,18 @@ class GeoJsonDeterminantesAmbientalesView(generics.ListAPIView):
                 GeoJson['properties']['area'] = hectareas
                 GeoJson_list.append(GeoJson)
 
-        return Response(GeoJson_list)
+                geojson_final = {
+                    "type": "FeatureCollection",
+                    "crs": { 
+                        "type": "name", 
+                        "properties": { 
+                            "name": "EPSG:4326" 
+                        } 
+                    },
+                    "features": GeoJson_list
+                }
+
+        return Response(geojson_final)
     
 
 class GeoJsonCertificacionAmbientalDesintegracionVehicularView(generics.ListAPIView):
@@ -60,16 +72,17 @@ class GeoJsonCertificacionAmbientalDesintegracionVehicularView(generics.ListAPIV
 
             if tramite_sasoftco:
                 GeoJson = {
-                    "Feature": tramite.id_permiso_ambiental.get_cod_tipo_permiso_ambiental_display(),
+                    "type": "Feature",
+                    "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [tramite_sasoftco['longitud'], tramite_sasoftco['latitud']]
+                        "coordinates": [tramite_sasoftco['UbiEcosis'].split(',')[0], tramite_sasoftco['c'].split(',')[1]]
                     },
                     "properties": {
                         "usuario": UtilsGeoJson.get_nombre_persona(tramite.id_solicitud_tramite.id_persona_titular),
                         #"resolucion": tramite_sasoftco['NumResol'], Validar
                         "expediente": tramite_sasoftco['NumExp'],
-                        "vigencia": tramite_sasoftco['Vigencia'], #Validar
+                        #"vigencia": tramite_sasoftco['Vigencia'], #Validar
                         "fecha_expedicion_resolucion": tramite_sasoftco['Fecha_Resolu'], #Validar
                         "municipio": tramite_sasoftco['MunPredio'],
                         "fecha_inicio_vigencia": tramite_sasoftco['FechaIniVig'], #Validar
@@ -79,11 +92,20 @@ class GeoJsonCertificacionAmbientalDesintegracionVehicularView(generics.ListAPIV
                     }
                 }
 
-                hectareas = tramite_sasoftco['Levant_Catastral'] * 0.0001
-                GeoJson['properties']['area'] = hectareas
                 GeoJson_list.append(GeoJson)
 
-        return Response(GeoJson_list)
+                geojson_final = {
+                    "type": "FeatureCollection",
+                    "crs": { 
+                        "type": "name", 
+                        "properties": { 
+                            "name": "EPSG:4326" 
+                        } 
+                    },
+                    "features": GeoJson_list
+                }
+
+        return Response(geojson_final)
     
 
 class GeoJsonInscripcionGestorRCDView(generics.ListAPIView):

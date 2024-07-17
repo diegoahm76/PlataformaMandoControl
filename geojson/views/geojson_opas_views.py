@@ -402,3 +402,46 @@ class GeoJsonSalvoconductoMovilizacionEspecimenesView(generics.ListAPIView):
         }
 
         return Response(geojson_final)
+
+class GeoJsonNegociosVerdesView(generics.ListAPIView):
+    # permission_classes = [IsAuthenticated,]
+
+    def get(self, request):
+        opas = PermisosAmbSolicitudesTramite.objects.filter(id_permiso_ambiental__cod_tipo_permiso_ambiental = 'OP', id_permiso_ambiental__nombre__icontains = 'Negocios verdes')
+
+        GeoJson_list = []
+
+        for opa in opas:
+
+            GeoJson = {
+                "type": "Feature",
+                "id": opa.id_solicitud_tramite.id_solicitud_tramite,
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [opa.coordenada_x, opa.coordenada_y]
+                },
+                "properties": {
+                    "OBJECTID": opa.id_solicitud_tramite.id_solicitud_tramite,
+                    "Usuario": opa.id_solicitud_tramite.id_persona_registra.user_set.all().exclude(id_usuario=1).first().nombre_de_usuario,
+                    "Nombre_Negocio": "", # VALIDAR
+                    "Municipio": opa.cod_municipio.nombre,
+                    "Latitud": opa.coordenada_x,
+                    "Longitud": opa.coordenada_y,
+                    "Sector_Productivo": "", # VALIDAR
+                    "Producto_Mas_Vendido": "" # VALIDAR
+                }
+            }
+            GeoJson_list.append(GeoJson)
+
+        geojson_final = {
+            "type": "FeatureCollection",
+            "crs": { 
+                "type": "name", 
+                "properties": { 
+                    "name": "EPSG:4326" 
+                } 
+            },
+            "features": GeoJson_list
+        }
+
+        return Response(geojson_final)

@@ -23,6 +23,7 @@ urlpatterns=[
     path('opa/registro_inventario_nacional/get/',opas_views.GeoJsonRegistroInventarioNacionalView.as_view(),name='geojson-registro-inventario-nacional'),
     path('opa/registro_unico_ambiental_RUA/get/',opas_views.GeoJsonRegistroUnicoAmbientalRUAView.as_view(),name='geojson-registro-unico-ambiental-RUA'),
     path('opa/salvoconducto_movilizacion/get/',opas_views.GeoJsonSalvoconductoMovilizacionEspecimenesView.as_view(),name='geojson-salvoconducto-movilizacion'),
+    path('opa/negocios_verdes/get/',opas_views.GeoJsonNegociosVerdesView.as_view(),name='geojson-negocios-verdes'),
 
 
 

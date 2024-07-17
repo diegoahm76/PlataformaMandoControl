@@ -19,12 +19,18 @@ urlpatterns=[
     path('opa/inscripcion_generador_acu/get/',opas_views.GeoJsonInscripcionGeneradorACUView.as_view(),name='geojson-inscripcion-generador-acu'),
     path('opa/inscripcion_gestion_acu/get/',opas_views.GeoJsonInscripcionGestionACUView.as_view(),name='geojson-inscripcion-gestion-acu'),
     path('opa/formulacion_proyectos_escolares/get/',opas_views.GeoJsonFormulacionProyectosEscolaresView.as_view(),name='geojson-formulacion-proyectos-escolares'),
+    path('opa/inscripcion_generador_residuos/get/',opas_views.GeoJsonInscripcionGeneradorResiduosView.as_view(),name='geojson-inscripcion-generador-residuos'),
+    path('opa/registro_inventario_nacional/get/',opas_views.GeoJsonRegistroInventarioNacionalView.as_view(),name='geojson-registro-inventario-nacional'),
+    path('opa/registro_unico_ambiental_RUA/get/',opas_views.GeoJsonRegistroUnicoAmbientalRUAView.as_view(),name='geojson-registro-unico-ambiental-RUA'),
+    path('opa/salvoconducto_movilizacion/get/',opas_views.GeoJsonSalvoconductoMovilizacionEspecimenesView.as_view(),name='geojson-salvoconducto-movilizacion'),
+
 
 
     #Estaciones
     path('estaciones/get/',estaciones_views.GeoJsonEstacionesView.as_view(),name='geojson-estaciones'),
+    path('estaciones_datos/get/',estaciones_views.GeoJsonEstacionesViewDetail.as_view(),name='geojson-estaciones-datos'),
 
     #Permisos Menores
     path('PM/Certificacion_inscripcion_control/get/',permisosmenores_views.GeoJsonCertificacionInscripcionControlView.as_view(),name='geojson-certificacion-inscripcion-control'),
-    path('estaciones-datos/get/',estaciones_views.GeoJsonEstacionesViewDetail.as_view(),name='geojson-estaciones-datos'),
+    
 ]

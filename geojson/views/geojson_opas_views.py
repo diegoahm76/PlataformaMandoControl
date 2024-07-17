@@ -225,3 +225,180 @@ class GeoJsonFormulacionProyectosEscolaresView(generics.ListAPIView):
             }
 
         return Response(geojson_final)
+    
+
+class GeoJsonInscripcionGeneradorResiduosView(generics.ListAPIView):
+
+    def get(self, request):
+        opas = PermisosAmbSolicitudesTramite.objects.filter(id_permiso_ambiental__cod_tipo_permiso_ambiental = 'OP', id_permiso_ambiental__nombre__icontains = 'Inscripción en el registro de generadores de residuos o desechos peligrosos')
+
+        GeoJson_list = []
+
+        for opa in opas:
+
+            GeoJson = {
+                "type": "Feature",
+                "id": opa.id_solicitud_tramite.id_solicitud_tramite,
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [opa.coordenada_x, opa.coordenada_y]
+                },
+                "properties": {
+                    "OBJECTID": opa.id_solicitud_tramite.id_solicitud_tramite,
+                    "Municipio": opa.cod_municipio.nombre,
+                    "Usuario": opa.id_solicitud_tramite.id_persona_registra.user_set.all().exclude(id_usuario=1).first().nombre_de_usuario,
+                    "Cantidad_Establecimiento": "", # VALIDAR
+                    "Nombre_Establecimiento": "", # VALIDAR
+                    "Longitud": opa.coordenada_x,
+                    "Latitud": opa.coordenada_y,
+                    "Actividad_Economica": "", # VALIDAR
+                    "Fecha_Inscripcion": opa.id_solicitud_tramite.fecha_registro.date(),
+                }
+            }
+            GeoJson_list.append(GeoJson)
+
+        geojson_final = {
+            "type": "FeatureCollection",
+            "crs": { 
+                "type": "name", 
+                "properties": { 
+                    "name": "EPSG:4326" 
+                } 
+            },
+            "features": GeoJson_list
+        }
+
+        return Response(geojson_final)
+
+
+class GeoJsonRegistroInventarioNacionalView(generics.ListAPIView):
+
+    def get(self, request):
+        opas = PermisosAmbSolicitudesTramite.objects.filter(id_permiso_ambiental__cod_tipo_permiso_ambiental = 'OP', id_permiso_ambiental__nombre__icontains = 'Registro inventario nacional de bifenilos policlorados')
+
+        GeoJson_list = []
+
+        for opa in opas:
+
+            GeoJson = {
+                "type": "Feature",
+                "id": opa.id_solicitud_tramite.id_solicitud_tramite,
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [opa.coordenada_x, opa.coordenada_y]
+                },
+                "properties": {
+                    "OBJECTID": opa.id_solicitud_tramite.id_solicitud_tramite,
+                    "Municipio": opa.cod_municipio.nombre,
+                    "Usuario": opa.id_solicitud_tramite.id_persona_registra.user_set.all().exclude(id_usuario=1).first().nombre_de_usuario,
+                    "Cantidad_Equipos_Uso": "", # VALIDAR
+                    "Tipo_Equipos_Uso": "", # VALIDAR
+                    "Municipio_Equipos_Uso": "", # VALIDAR
+                    "Cantidad_Equipos_Desuso": "", # VALIDAR
+                    "Tipo_Equipos_Desuso": "", # VALIDAR
+                    "Municipio_Equipos_Desuso": "", # VALIDAR
+                    "Cantidad_Equipos_Desechado": "", # VALIDAR
+                    "Tipo_Equipos_Desechado": "", # VALIDAR
+                    "Municipio_Equipos_Desechado": "", # VALIDAR
+                    "Fecha_Inscripcion": opa.id_solicitud_tramite.fecha_registro.date(),
+                }
+            }
+            GeoJson_list.append(GeoJson)
+
+        geojson_final = {
+            "type": "FeatureCollection",
+            "crs": { 
+                "type": "name", 
+                "properties": { 
+                    "name": "EPSG:4326" 
+                } 
+            },
+            "features": GeoJson_list
+        }
+
+        return Response(geojson_final)
+    
+class GeoJsonRegistroUnicoAmbientalRUAView(generics.ListAPIView):
+
+    def get(self, request):
+        opas = PermisosAmbSolicitudesTramite.objects.filter(id_permiso_ambiental__cod_tipo_permiso_ambiental = 'OP', id_permiso_ambiental__nombre__icontains = 'Registro único ambiental')
+
+        GeoJson_list = []
+
+        for opa in opas:
+
+            GeoJson = {
+                "type": "Feature",
+                "id": opa.id_solicitud_tramite.id_solicitud_tramite,
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [opa.coordenada_x, opa.coordenada_y]
+                },
+                "properties": {
+                    "OBJECTID": opa.id_solicitud_tramite.id_solicitud_tramite,
+                    "Municipio": opa.cod_municipio.nombre,
+                    "Usuario": opa.id_solicitud_tramite.id_persona_registra.user_set.all().exclude(id_usuario=1).first().nombre_de_usuario,
+                    "Cantidad_Establecimiento": "", # VALIDAR
+                    "Nombre_Establecimiento": "", # VALIDAR
+                    "Actividad_Economica": "", # VALIDAR
+                    "Fecha_Inscripcion": opa.id_solicitud_tramite.fecha_registro.date(),
+                }
+            }
+            GeoJson_list.append(GeoJson)
+
+        geojson_final = {
+            "type": "FeatureCollection",
+            "crs": { 
+                "type": "name", 
+                "properties": { 
+                    "name": "EPSG:4326" 
+                } 
+            },
+            "features": GeoJson_list
+        }
+
+        return Response(geojson_final)
+    
+
+class GeoJsonSalvoconductoMovilizacionEspecimenesView(generics.ListAPIView):
+
+    def get(self, request):
+        opas = PermisosAmbSolicitudesTramite.objects.filter(id_permiso_ambiental__cod_tipo_permiso_ambiental = 'OP', id_permiso_ambiental__nombre__icontains = 'Salvoconducto único nacional para la movilización de especímenes de la diversidad biológica')
+
+        GeoJson_list = []
+
+        for opa in opas:
+
+            GeoJson = {
+                "type": "Feature",
+                "id": opa.id_solicitud_tramite.id_solicitud_tramite,
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [opa.coordenada_x, opa.coordenada_y]
+                },
+                "properties": {
+                    "OBJECTID": opa.id_solicitud_tramite.id_solicitud_tramite,
+                    "Usuario": opa.id_solicitud_tramite.id_persona_registra.user_set.all().exclude(id_usuario=1).first().nombre_de_usuario,
+                    "Tipo_Salvoconducto": "", # VALIDAR
+                    "Recurso_Movilizado": "", # VALIDAR
+                    "Elemento_Movilizado": "", # VALIDAR
+                    "Cantidad": "", # VALIDAR
+                    "Finalidad_Recurso_Movilizado": "", # VALIDAR
+                    "Fecha_Movilizacion": "", # VALIDAR
+                    "Fecha_Inscripcion": opa.id_solicitud_tramite.fecha_registro.date(),
+                }
+            }
+            GeoJson_list.append(GeoJson)
+
+        geojson_final = {
+            "type": "FeatureCollection",
+            "crs": { 
+                "type": "name", 
+                "properties": { 
+                    "name": "EPSG:4326" 
+                } 
+            },
+            "features": GeoJson_list
+        }
+
+        return Response(geojson_final)

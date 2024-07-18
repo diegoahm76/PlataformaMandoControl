@@ -24,6 +24,7 @@ urlpatterns=[
     path('opa/registro_unico_ambiental_RUA/get/',opas_views.GeoJsonRegistroUnicoAmbientalRUAView.as_view(),name='geojson-registro-unico-ambiental-RUA'),
     path('opa/salvoconducto_movilizacion/get/',opas_views.GeoJsonSalvoconductoMovilizacionEspecimenesView.as_view(),name='geojson-salvoconducto-movilizacion'),
     path('opa/negocios_verdes/get/',opas_views.GeoJsonNegociosVerdesView.as_view(),name='geojson-negocios-verdes'),
+    path('opa/planes_paisajisticos_ordenato/get/',opas_views.GeoJsonPlanesPaisajisticosOrdenatoView.as_view(),name='geojson-planes-paisajisticos-ordenato'),
 
 
 
@@ -33,5 +34,7 @@ urlpatterns=[
 
     #Permisos Menores
     path('PM/Certificacion_inscripcion_control/get/',permisosmenores_views.GeoJsonCertificacionInscripcionControlView.as_view(),name='geojson-certificacion-inscripcion-control'),
+    path('PM/permiso_caza/get/',permisosmenores_views.GeoJsonPermisoCazaView.as_view(),name='geojson-permiso-caza'),
+    path('PM/red_amigos_silvestres/get/',permisosmenores_views.GeoJsonRedAmigosSilvestresView.as_view(),name='geojson-red-amigos-silvestres'),
     
 ]

@@ -49,3 +49,94 @@ class GeoJsonCertificacionInscripcionControlView(generics.ListAPIView):
 
         return Response(geojson_final)
     
+class GeoJsonPermisoCazaView(generics.ListAPIView):
+    # permission_classes = [IsAuthenticated,]
+
+    def get(self, request):
+        permisos_menores = PermisosAmbSolicitudesTramite.objects.filter(id_permiso_ambiental__cod_tipo_permiso_ambiental = 'PM', id_permiso_ambiental__nombre__icontains = 'Permiso de caza de fauna silvestre')
+
+        GeoJson_list = []
+
+        for permiso_menor in permisos_menores:
+
+            GeoJson = {
+                "type": "Feature",
+                "id": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [permiso_menor.coordenada_x, permiso_menor.coordenada_y]
+                },
+                "properties": {
+                    "OBJECTID": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
+                    "Municipio": permiso_menor.cod_municipio.nombre,
+                    "Fecha": permiso_menor.id_solicitud_tramite.fecha_registro.date(),
+                    "Usuario": permiso_menor.id_solicitud_tramite.id_persona_registra.user_set.all().exclude(id_usuario=1).first().nombre_de_usuario,
+                    "Numero_Expediente": UtilsGeoJson.get_expediente(permiso_menor),
+                    "Latitud": permiso_menor.coordenada_x,
+                    "Longitud": permiso_menor.coordenada_y,
+                    "Termino_Permiso_Vigencia": "", # VALIDAR
+                    "Numero_Resolucion": "", # VALIDAR
+                    "Fecha_Inicio_Vigencia": "", # VALIDAR
+                    "Fecha_Fin_Vigencia": "" # VALIDAR
+                }
+            }
+            GeoJson_list.append(GeoJson)
+
+        geojson_final = {
+            "type": "FeatureCollection",
+            "crs": { 
+                "type": "name", 
+                "properties": { 
+                    "name": "EPSG:4326" 
+                } 
+            },
+            "features": GeoJson_list
+        }
+
+        return Response(geojson_final)
+    
+class GeoJsonRedAmigosSilvestresView(generics.ListAPIView):
+    # permission_classes = [IsAuthenticated,]
+
+    def get(self, request):
+        permisos_menores = PermisosAmbSolicitudesTramite.objects.filter(id_permiso_ambiental__cod_tipo_permiso_ambiental = 'PM', id_permiso_ambiental__nombre__icontains = 'Licencia de red de amigos de la fauna silvestre')
+
+        GeoJson_list = []
+
+        for permiso_menor in permisos_menores:
+
+            GeoJson = {
+                "type": "Feature",
+                "id": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [permiso_menor.coordenada_x, permiso_menor.coordenada_y]
+                },
+                "properties": {
+                    "OBJECTID": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
+                    "Usuario": permiso_menor.id_solicitud_tramite.id_persona_registra.user_set.all().exclude(id_usuario=1).first().nombre_de_usuario,
+                    "Municipio": permiso_menor.cod_municipio.nombre,
+                    "Latitud": permiso_menor.coordenada_x,
+                    "Longitud": permiso_menor.coordenada_y,
+                    "Numero_Expediente": UtilsGeoJson.get_expediente(permiso_menor),
+                    "Tipo_Licencia_Funcionamiento": "", # VALIDAR
+                    "Termino_Licencia": "", # VALIDAR
+                    "Numero_Resolucion_Funcionamiento_Temporal": "", # VALIDAR
+                    "Resolucion_Funcionamiento_Definitivo": "" # VALIDAR
+                }
+            }
+            GeoJson_list.append(GeoJson)
+
+        geojson_final = {
+            "type": "FeatureCollection",
+            "crs": { 
+                "type": "name", 
+                "properties": { 
+                    "name": "EPSG:4326" 
+                } 
+            },
+            "features": GeoJson_list
+        }
+
+        return Response(geojson_final)
+    

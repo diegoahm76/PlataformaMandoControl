@@ -226,3 +226,102 @@ class GeoJsonPermisoOcupacionCaucePlayaLechosView(generics.ListAPIView):
         return Response(GeoJson_list)
 
 
+
+class GeoJsonPermisoVertimientosAguaView(generics.ListAPIView):
+
+    def get(self, request):
+        permisos_menores = PermisosAmbSolicitudesTramite.objects.filter(id_permiso_ambiental__cod_tipo_permiso_ambiental = 'LA', id_permiso_ambiental__nombre__icontains = 'Permiso de vertimientos al agua')
+
+        GeoJson_list = []
+
+        for permiso_menor in permisos_menores:
+
+            GeoJson = {
+                "type": "Feature",
+                "id": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [permiso_menor.coordenada_x, permiso_menor.coordenada_y]
+                },
+                "properties": {
+                    "OBJECTID": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
+                    "Nombre": permiso_menor.id_solicitud_tramite.nombre_proyecto,
+                    "Matricula_Inmobiliaria": "", # VALIDAR
+                    "Latitud": permiso_menor.coordenada_x,
+                    "Longitud": permiso_menor.coordenada_y,
+                    "Altura": "", # VALIDAR
+                    "Municipio" :permiso_menor.cod_municipio.nombre,
+                    "Usuario": permiso_menor.id_solicitud_tramite.id_persona_registra.user_set.all().exclude(id_usuario=1).first().nombre_de_usuario,
+                    "Resolucion":"", # VALIDAR
+                    "Fecha_Expedicion": "", # VALIDAR
+                    "Numero_Expediente": UtilsGeoJson.get_expediente(permiso_menor),
+                    "Termino_Permiso": "", # VALIDAR
+                    "Fecha_Inicio": "", # VALIDAR
+                    "Fecha_Fin_Vigencia": "" # VALIDAR
+                }
+            }
+            GeoJson_list.append(GeoJson)
+
+        geojson_final = {
+            "type": "FeatureCollection",
+            "crs": { 
+                "type": "name", 
+                "properties": { 
+                    "name": "EPSG:4326" 
+                } 
+            },
+            "features": GeoJson_list
+        }
+
+        return Response(geojson_final)
+
+
+class GeoJsonPermisoVertimientosSueloView(generics.ListAPIView):
+
+    def get(self, request):
+        permisos_menores = PermisosAmbSolicitudesTramite.objects.filter(id_permiso_ambiental__cod_tipo_permiso_ambiental = 'LA', id_permiso_ambiental__nombre__icontains = 'Permiso de vertimientos al suelo')
+
+        GeoJson_list = []
+
+        for permiso_menor in permisos_menores:
+
+            GeoJson = {
+                "type": "Feature",
+                "id": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [permiso_menor.coordenada_x, permiso_menor.coordenada_y]
+                },
+                "properties": {
+                    "OBJECTID": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
+                    "Nombre": permiso_menor.id_solicitud_tramite.nombre_proyecto,
+                    "Matricula_Inmobiliaria": "", # VALIDAR
+                    "Cedula_Catastral": "", # VALIDAR
+                    "Municipio" :permiso_menor.cod_municipio.nombre,
+                    "Vereda": "", # VALIDAR
+                    "Sector": "", # VALIDAR
+                    "Usuario": permiso_menor.id_solicitud_tramite.id_persona_registra.user_set.all().exclude(id_usuario=1).first().nombre_de_usuario,
+                    "Expediente": UtilsGeoJson.get_expediente(permiso_menor),
+                    "Resolucion":"", # VALIDAR
+                    "Fecha_Expedicion": "", # VALIDAR
+                    "Termino_Permiso": "", # VALIDAR
+                    "Fecha_Inicio": "", # VALIDAR
+                    "Fecha_Fin_Vigencia": "" # VALIDAR
+                }
+            }
+            GeoJson_list.append(GeoJson)
+
+        geojson_final = {
+            "type": "FeatureCollection",
+            "crs": { 
+                "type": "name", 
+                "properties": { 
+                    "name": "EPSG:4326" 
+                } 
+            },
+            "features": GeoJson_list
+        }
+
+        return Response(geojson_final)
+
+

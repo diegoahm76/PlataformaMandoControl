@@ -45,16 +45,16 @@ class GeoJsonDeterminantesAmbientalesView(generics.ListAPIView):
                 GeoJson['properties']['area'] = hectareas
                 GeoJson_list.append(GeoJson)
 
-                geojson_final = {
-                    "type": "FeatureCollection",
-                    "crs": { 
-                        "type": "name", 
-                        "properties": { 
-                            "name": "EPSG:4326" 
-                        } 
-                    },
-                    "features": GeoJson_list
-                }
+        geojson_final = {
+            "type": "FeatureCollection",
+            "crs": { 
+                "type": "name", 
+                "properties": { 
+                    "name": "EPSG:4326" 
+                } 
+            },
+            "features": GeoJson_list
+        }
 
         return Response(geojson_final)
     
@@ -69,7 +69,7 @@ class GeoJsonCertificacionAmbientalDesintegracionVehicularView(generics.ListAPIV
 
         for tramite in tramites:
             tramite_sasoftco = UtilsGeoJson.get_tramite_sasoftco(tramite)
-
+ 
             if tramite_sasoftco:
                 GeoJson = {
                     "type": "Feature",
@@ -94,16 +94,16 @@ class GeoJsonCertificacionAmbientalDesintegracionVehicularView(generics.ListAPIV
 
                 GeoJson_list.append(GeoJson)
 
-                geojson_final = {
-                    "type": "FeatureCollection",
-                    "crs": { 
-                        "type": "name", 
-                        "properties": { 
-                            "name": "EPSG:4326" 
-                        } 
-                    },
-                    "features": GeoJson_list
-                }
+        geojson_final = {
+            "type": "FeatureCollection",
+            "crs": { 
+                "type": "name", 
+                "properties": { 
+                    "name": "EPSG:4326" 
+                } 
+            },
+            "features": GeoJson_list
+        }
 
         return Response(geojson_final)
     
@@ -226,6 +226,45 @@ class GeoJsonPermisoOcupacionCaucePlayaLechosView(generics.ListAPIView):
         return Response(GeoJson_list)
 
 
+class GeoJsonAprovechamientoCarbonVegetalMovilizacionView(generics.ListAPIView):
+    # permission_classes = [IsAuthenticated,]
+
+    def get(self, request):
+        tramites = PermisosAmbSolicitudesTramite.objects.filter(id_permiso_ambiental__cod_tipo_permiso_ambiental = 'PE', id_permiso_ambiental__nombre__icontains = 'Permiso para la producción y movilización de carbón vegetal con fines comerciales')
+
+        GeoJson_list = []
+
+        for tramite in tramites:
+            tramite_sasoftco = UtilsGeoJson.get_tramite_sasoftco(tramite)
+ 
+            if tramite_sasoftco:
+                GeoJson = {
+                    "type": "Feature",
+                    "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [tramite_sasoftco['Mapa2'].split(',')[0], tramite_sasoftco['Mapa2'].split(',')[1]]
+                    },
+                    "properties": {
+                        "codigo_catastral": tramite_sasoftco['CCatas'],
+                        "numero_matricula": tramite_sasoftco['MatriInmobi1'],
+                        "municipio": tramite_sasoftco['MunPredio'],
+                        "latitud": tramite_sasoftco['Mapa2'].split(',')[0],
+                        "longitud": tramite_sasoftco['Mapa2'].split(',')[1],
+                        #"altura": tramite_sasoftco['Altura'] Validar,
+                        "Municipio": tramite_sasoftco['Municipio'],
+                        #"uso_suelo": tramite_sasoftco['UsoSuelo'] Validar,
+                        "usuario": UtilsGeoJson.get_nombre_persona(tramite.id_solicitud_tramite.id_persona_titular),
+                        "expediente": tramite_sasoftco['NumExp'],
+                        #"resolucion": tramite_sasoftco['NumResol'] Validar,
+                        #"expedicion": tramite_sasoftco['Fecha_Resolu'] validar,
+                        #"termino_permiso": tramite_sasoftco['FechaIniVig'], #Validar
+                        #"fecha_fin_vigencia": tramite_sasoftco['FechaFinVig'], #Validar
+                        #"fecha_inicio_vigencia": tramite_sasoftco['FechaIniVig'], #Validar
+                    }
+                }
+
+                GeoJson_list.append(GeoJson)
 
 class GeoJsonPermisoVertimientosAguaView(generics.ListAPIView):
 
@@ -276,6 +315,45 @@ class GeoJsonPermisoVertimientosAguaView(generics.ListAPIView):
         return Response(geojson_final)
 
 
+class GeoJsonAprovechamientoProductosForestalesView(generics.ListAPIView):
+    # permission_classes = [IsAuthenticated,]
+
+    def get(self, request):
+        tramites = PermisosAmbSolicitudesTramite.objects.filter(id_permiso_ambiental__cod_tipo_permiso_ambiental = 'PE', id_permiso_ambiental__nombre__icontains = 'Permiso de aprovechamiento de productos forestales no maderables (PFNM)')
+
+        GeoJson_list = []
+
+        for tramite in tramites:
+            tramite_sasoftco = UtilsGeoJson.get_tramite_sasoftco(tramite)
+ 
+            if tramite_sasoftco:
+                GeoJson = {
+                    "type": "Feature",
+                    "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [tramite_sasoftco['LatitudF'].split(',')[0], tramite_sasoftco['LatitudF'].split(',')[1]]
+                    },
+                    "properties": {
+                        "numero_matricula": tramite_sasoftco['MatriInmobi'],
+                        "municipio": tramite_sasoftco['MunPredio'],
+                        "latitud": tramite_sasoftco['LatitudF'].split(',')[0],
+                        "longitud": tramite_sasoftco['LatitudF'].split(',')[1],
+                        #"altura": tramite_sasoftco['Altura'] Validar,
+                        "Municipio": tramite_sasoftco['MunPredio'],
+                        #"uso_suelo": tramite_sasoftco['UsoSuelo'] Validar,
+                        "usuario": UtilsGeoJson.get_nombre_persona(tramite.id_solicitud_tramite.id_persona_titular),
+                        "expediente": tramite_sasoftco['NumExp'],
+                        #"resolucion": tramite_sasoftco['NumResol'] Validar,
+                        #"fecha_expedicion": tramite_sasoftco['Fecha_Resolu'] validar,
+                        #"termino_permiso": tramite_sasoftco['FechaIniVig'], #Validar
+                        #"vigencia": tramite_sasoftco['FechaFinVig'], #Validars
+                        #"fecha_fin_vigencia": tramite_sasoftco['FechaFinVig'], #Validar
+                        #"fecha_inicio_vigencia": tramite_sasoftco['FechaIniVig'], #Validar
+                    }
+                }
+
+                GeoJson_list.append(GeoJson)
 class GeoJsonPermisoVertimientosSueloView(generics.ListAPIView):
 
     def get(self, request):
@@ -323,6 +401,7 @@ class GeoJsonPermisoVertimientosSueloView(generics.ListAPIView):
         }
 
         return Response(geojson_final)
+    
 
 class GeoJsonPermisosProspeccionAguasSubterraneasView(generics.ListAPIView):
     # permission_classes = [IsAuthenticated,]

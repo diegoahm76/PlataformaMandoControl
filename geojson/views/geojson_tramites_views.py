@@ -324,4 +324,55 @@ class GeoJsonPermisoVertimientosSueloView(generics.ListAPIView):
 
         return Response(geojson_final)
 
+class GeoJsonPermisosProspeccionAguasSubterraneasView(generics.ListAPIView):
+    # permission_classes = [IsAuthenticated,]
 
+    def get(self, request):
+        tramites = PermisosAmbSolicitudesTramite.objects.filter(id_permiso_ambiental__cod_tipo_permiso_ambiental = 'DA', id_permiso_ambiental__nombre__icontains = 'Permiso de Prospección y exploración de aguas subterráneas')
+
+        GeoJson_list = []
+
+        for tramite in tramites:
+            tramite_sasoftco = UtilsGeoJson.get_tramite_sasoftco(tramite)
+
+            if tramite_sasoftco:
+                GeoJson = {
+                    "type": "Feature",
+                    "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [tramite_sasoftco['UbiEcosis'].split(',')[0], tramite_sasoftco['UbiEcosis'].split(',')[1]]
+                    },
+                    "properties": {
+                        "Numero_Matricula_Inmobiliaria": tramite_sasoftco['MatriInmobi'],
+                        "Cedula_Catastral": tramite_sasoftco['CCatas'], # VALIDAR
+                        "Vereda": tramite_sasoftco['Ndivision'],
+                        "Sector": tramite_sasoftco['Zon_value'],
+                        "Usuario": tramite.id_solicitud_tramite.id_persona_registra.user_set.all().exclude(id_usuario=1).first().nombre_de_usuario,
+                        "Expediente": UtilsGeoJson.get_expediente(tramite),
+                        "Resolucion": "", # VALIDAR
+                        "Fecha_Expedicion": "", # VALIDAR
+                        "Termino_Permiso": "", # VALIDAR
+                        "Fecha_Inicio_Vigencia": tramite_sasoftco['FReserva_Inicial'], # VALIDAR
+                        "Fecha_Fin_Vigencia": tramite_sasoftco['FReserva_Final'], # VALIDAR
+                        "Latitud": tramite.coordenada_x,
+                        "Longitud": tramite.coordenada_y,
+                        "Altura": "", # VALIDAR
+                        "Pozo_Profundo_Construido": "", # VALIDAR
+                        "Proyeccion_Uso": "", # VALIDAR
+                    }
+                }
+                GeoJson_list.append(GeoJson)
+
+        geojson_final = {
+            "type": "FeatureCollection",
+            "crs": { 
+                "type": "name", 
+                "properties": { 
+                    "name": "EPSG:4326" 
+                } 
+            },
+            "features": GeoJson_list
+        }
+
+        return Response(geojson_final)

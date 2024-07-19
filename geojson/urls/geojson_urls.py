@@ -14,6 +14,7 @@ urlpatterns=[
     path('tramite/permiso_ocupación_cauce_playa_y_lechos/get/',tramites_views.GeoJsonPermisoOcupacionCaucePlayaLechosView.as_view(),name='geojson-permiso-ocupación-cauce-playa-y-lechos'),
     path('tramite/permiso_vertimientos_agua/get/',tramites_views.GeoJsonPermisoVertimientosAguaView.as_view(),name='geojson-permiso-vertimientos-agua'),
     path('tramite/permiso_vertimientos_suelo/get/',tramites_views.GeoJsonPermisoVertimientosSueloView.as_view(),name='geojson-permiso-vertimientos-agua'),
+    path('tramite/permiso_prospeccion_aguas_subterraneas/get/',tramites_views.GeoJsonPermisosProspeccionAguasSubterraneasView.as_view(),name='geojson-permiso-prospeccion-agua'),
 
     #Opas
     path('opa/inscripcion_dga/get/',opas_views.GeoJsonInscripcionDGAView.as_view(),name='geojson-inscripcion-dga'),

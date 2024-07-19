@@ -12,6 +12,8 @@ urlpatterns=[
     path('tramite/inscripcion_gestor_rcd/get/',tramites_views.GeoJsonInscripcionGestorRCDView.as_view(),name='geojson-inscripcion-generador-rcd'),
     path('tramite/licencia_ambiental_transferencia_electrica/get/',tramites_views.GeoJsonLicenciaAmbientalTransElectricaView.as_view(),name='geojson-licencia-ambiental-transferencia-eléctrica'),
     path('tramite/permiso_ocupación_cauce_playa_y_lechos/get/',tramites_views.GeoJsonPermisoOcupacionCaucePlayaLechosView.as_view(),name='geojson-permiso-ocupación-cauce-playa-y-lechos'),
+    path('tramite/aprovechamiento_carbon_vegetal/get/',tramites_views.GeoJsonAprovechamientoCarbonVegetalMovilizacionView.as_view(),name='geojson-aprovechamiento-carbon-vegetal'),
+    path('tramite/aprovechamiento_ambiental_productos_f/get/',tramites_views.GeoJsonAprovechamientoProductosForestalesView.as_view(),name='geojson-aprovechamiento-ambiental-productos-f'), 
 
     #Opas
     path('opa/inscripcion_dga/get/',opas_views.GeoJsonInscripcionDGAView.as_view(),name='geojson-inscripcion-dga'),

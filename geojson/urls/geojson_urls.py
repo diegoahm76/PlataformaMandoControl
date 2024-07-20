@@ -19,7 +19,8 @@ urlpatterns=[
     path('tramite/permiso_prospeccion_aguas_subterraneas/get/',tramites_views.GeoJsonPermisosProspeccionAguasSubterraneasView.as_view(),name='geojson-permiso-prospeccion-agua'),
     path('tramite/planes_contingencia_estaciones_servicio/get/',tramites_views.GeoJsonPlanesContingenciaEstacionesServicioView.as_view(),name='geojson-planes-contingencia-estaciones-servicio'),
     path('tramite/proyectos_industriales_minerias/get/',tramites_views.GeoJsonProyectosIndustrialesMineriasView.as_view(),name='geojson-proyectos-industriales-minerias'),
-    path('tramite/permiso_ocupacion_cauces/get/',tramites_views.GeoJsonPermisoOcupacionCaucesView.as_view(),name='geojson-permiso-ocupacion-playa'),
+    path('tramite/permiso_ocupacion_cauces/get/',tramites_views.GeoJsonPermisoOcupacionCaucesView.as_view(),name='geojson-permiso-ocupacion-cauces'),
+    path('tramite/recoleccion_especimenes/get/',tramites_views.GeoJsonRecoleccionEspecimenesView.as_view(),name='geojson-recoleccion-especimenes'),
 
     #Opas
     path('opa/inscripcion_dga/get/',opas_views.GeoJsonInscripcionDGAView.as_view(),name='geojson-inscripcion-dga'),

@@ -613,7 +613,7 @@ class GeoJsonPermisoOcupacionCaucesView(generics.ListAPIView):
     # permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        tramites = PermisosAmbSolicitudesTramite.objects.filter(id_permiso_ambiental__cod_tipo_permiso_ambiental = 'PA', id_permiso_ambiental__nombre__icontains = 'Permiso de ocupación de cauce, playa y lechos')
+        tramites = PermisosAmbSolicitudesTramite.objects.filter(id_permiso_ambiental__cod_tipo_permiso_ambiental = 'PA', id_permiso_ambiental__nombre__icontains = 'Permiso de ocupación de cauce, playa y lechos') # VALIDAR SI TOCA HACER OTRO FILTRO PARA SOLO CAUCES
 
         GeoJson_list = []
 
@@ -641,6 +641,53 @@ class GeoJsonPermisoOcupacionCaucesView(generics.ListAPIView):
                         "Termino_Permiso": "", # VALIDAR
                         "Fecha_Inicio_Vigencia": tramite_sasoftco['FReserva_Inicial'], # VALIDAR
                         "Fecha_Fin_Vigencia": tramite_sasoftco['FReserva_Final'], # VALIDAR
+                    }
+                }
+
+                GeoJson_list.append(GeoJson)
+
+        geojson_final = {
+            "type": "FeatureCollection",
+            "crs": { 
+                "type": "name", 
+                "properties": { 
+                    "name": "EPSG:4326" 
+                } 
+            },
+            "features": GeoJson_list
+        }
+
+        return Response(geojson_final)
+    
+class GeoJsonRecoleccionEspecimenesView(generics.ListAPIView):
+    # permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        tramites = PermisosAmbSolicitudesTramite.objects.filter(id_permiso_ambiental__cod_tipo_permiso_ambiental = 'PE', id_permiso_ambiental__nombre__icontains = 'Permiso de recolección de especímenes de especies silvestres de la diversidad biológica con fines de investigación científica no comercial')
+
+        GeoJson_list = []
+
+        for tramite in tramites:
+            tramite_sasoftco = UtilsGeoJson.get_tramite_sasoftco(tramite)
+
+            if tramite_sasoftco:
+                GeoJson = {
+                    "Feature": tramite.id_permiso_ambiental.get_cod_tipo_permiso_ambiental_display(),
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [tramite.coordenada_x, tramite.coordenada_y]
+                    },
+                    "properties": {
+                        "Usuario": tramite.id_solicitud_tramite.id_persona_registra.user_set.all().exclude(id_usuario=1).first().nombre_de_usuario,
+                        "Municipio" :tramite.cod_municipio.nombre,
+                        "Latitud": tramite.coordenada_x,
+                        "Longitud": tramite.coordenada_y,
+                        "Resolucion": tramite_sasoftco['resolucion'], # VALIDAR
+                        "Expediente": UtilsGeoJson.get_expediente(tramite),
+                        "Vigencia": "", # VALIDAR
+                        "Fecha_Expedicion_Resolucion": "", # VALIDAR
+                        "Fecha_Inicio_Vigencia": tramite_sasoftco['FReserva_Inicial'], # VALIDAR
+                        "Especimen": "", # VALIDAR
                     }
                 }
 

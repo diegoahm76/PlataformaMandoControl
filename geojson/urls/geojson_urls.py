@@ -21,6 +21,8 @@ urlpatterns=[
     path('tramite/proyectos_industriales_minerias/get/',tramites_views.GeoJsonProyectosIndustrialesMineriasView.as_view(),name='geojson-proyectos-industriales-minerias'),
     path('tramite/permiso_ocupacion_cauces/get/',tramites_views.GeoJsonPermisoOcupacionCaucesView.as_view(),name='geojson-permiso-ocupacion-cauces'),
     path('tramite/recoleccion_especimenes/get/',tramites_views.GeoJsonRecoleccionEspecimenesView.as_view(),name='geojson-recoleccion-especimenes'),
+    path('tramite/certificacion_ambiental_automotores/get/',tramites_views.GeoJsonCertificacionAmbientalAutomotoresView.as_view(),name='geojson-certificacion-ambiental-automotores'),
+    path('tramite/permiso_emisiones_atmosfericas/get/',tramites_views.GeoJsonPermisoEmisionesAtmosfericasView.as_view(),name='geojson-permiso-emisiones-atmosfericas'),
 
     #Opas
     path('opa/inscripcion_dga/get/',opas_views.GeoJsonInscripcionDGAView.as_view(),name='geojson-inscripcion-dga'),

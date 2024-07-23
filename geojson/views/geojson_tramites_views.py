@@ -3,6 +3,7 @@ from rest_framework.exceptions import ValidationError,NotFound,PermissionDenied
 from rest_framework.response import Response
 from rest_framework import generics,status
 from rest_framework.permissions import IsAuthenticated
+from geojson.models.radicados_models import PQRSDF
 from geojson.utils import UtilsGeoJson
 from geojson.models.tramites_models import PermisosAmbSolicitudesTramite
 
@@ -121,7 +122,8 @@ class GeoJsonInscripcionGestorRCDView(generics.ListAPIView):
 
             if tramite_sasoftco:
                 GeoJson = {
-                    "Feature": tramite.id_permiso_ambiental.get_cod_tipo_permiso_ambiental_display(),
+                    "type": "Feature",
+                    "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
                         "coordinates": [tramite.coordenada_x, tramite.coordenada_y]
@@ -172,7 +174,8 @@ class GeoJsonLicenciaAmbientalTransElectricaView(generics.ListAPIView):
 
             if tramite_sasoftco:
                 GeoJson = {
-                    "Feature": tramite.id_permiso_ambiental.get_cod_tipo_permiso_ambiental_display(),
+                    "type": "Feature",
+                    "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
                         "coordinates": [tramite.coordenada_x, tramite.coordenada_y]
@@ -223,7 +226,8 @@ class GeoJsonPermisoOcupacionPlayaView(generics.ListAPIView):
 
             if tramite_sasoftco:
                 GeoJson = {
-                    "Feature": tramite.id_permiso_ambiental.get_cod_tipo_permiso_ambiental_display(),
+                    "type": "Feature",
+                    "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
                         "coordinates": [tramite.coordenada_x, tramite.coordenada_y]
@@ -622,7 +626,8 @@ class GeoJsonPermisoOcupacionCaucesView(generics.ListAPIView):
 
             if tramite_sasoftco:
                 GeoJson = {
-                    "Feature": tramite.id_permiso_ambiental.get_cod_tipo_permiso_ambiental_display(),
+                    "type": "Feature",
+                    "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
                         "coordinates": [tramite.coordenada_x, tramite.coordenada_y]
@@ -672,7 +677,8 @@ class GeoJsonRecoleccionEspecimenesView(generics.ListAPIView):
 
             if tramite_sasoftco:
                 GeoJson = {
-                    "Feature": tramite.id_permiso_ambiental.get_cod_tipo_permiso_ambiental_display(),
+                    "type": "Feature",
+                    "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
                         "coordinates": [tramite.coordenada_x, tramite.coordenada_y]
@@ -719,7 +725,8 @@ class GeoJsonCertificacionAmbientalAutomotoresView(generics.ListAPIView):
 
             if tramite_sasoftco:
                 GeoJson = {
-                    "Feature": tramite.id_permiso_ambiental.get_cod_tipo_permiso_ambiental_display(),
+                    "type": "Feature",
+                    "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
                         "coordinates": [tramite.coordenada_x, tramite.coordenada_y]
@@ -765,7 +772,8 @@ class GeoJsonPermisoEmisionesAtmosfericasView(generics.ListAPIView):
 
             if tramite_sasoftco:
                 GeoJson = {
-                    "Feature": tramite.id_permiso_ambiental.get_cod_tipo_permiso_ambiental_display(),
+                    "type": "Feature",
+                    "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
                         "coordinates": [tramite.coordenada_x, tramite.coordenada_y]
@@ -816,7 +824,8 @@ class GeoJsonInscripcionAcopiadorAceitesView(generics.ListAPIView):
 
             if tramite_sasoftco:
                 GeoJson = {
-                    "Feature": tramite.id_permiso_ambiental.get_cod_tipo_permiso_ambiental_display(),
+                    "type": "Feature",
+                    "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
                         "coordinates": [tramite.coordenada_x, tramite.coordenada_y]
@@ -830,7 +839,7 @@ class GeoJsonInscripcionAcopiadorAceitesView(generics.ListAPIView):
                         "Fecha_Expedicion_Resolucion": "", # VALIDAR
                         "Latitud": tramite.coordenada_x,
                         "Longitud": tramite.coordenada_y,
-                        "Volumen_Aceite_Almacenado": tramite_sasoftco['Volac'], # VALIDAR
+                        "Volumen_Aceite_Almacenado": tramite_sasoftco['Volac'],
                         "Tipo_Acopiador": tramite_sasoftco['Tacop_value'] if tramite_sasoftco['Tacop_value'] != 'Otro' else tramite_sasoftco['Tacop2'],
                         "Tipo_Aceite_Usado": tramite_sasoftco['Toil_value'] if tramite_sasoftco['Toil_value'] != 'Otro' else tramite_sasoftco['Toil2'],
                         "Sistema_Almacenamiento_Residuos": tramite_sasoftco['Sisalm_value'] if tramite_sasoftco['Sisalm_value'] != 'Otro' else tramite_sasoftco['Sisalm2']
@@ -851,3 +860,50 @@ class GeoJsonInscripcionAcopiadorAceitesView(generics.ListAPIView):
         }
 
         return Response(geojson_final)
+    
+# class GeoJsonPQRSDFView(generics.ListAPIView):
+#     # permission_classes = [IsAuthenticated]
+
+#     def get(self, request):
+#         pqrsdfs = PQRSDF.objects.all()
+
+#         GeoJson_list = []
+
+#         for pqrsdf in pqrsdfs:
+#             GeoJson = {
+#                 "type": "Feature",
+#                 "id": pqrsdf.id_PQRSDF,
+#                 "geometry": {
+#                     "type": "Point",
+#                     "coordinates": [tramite.coordenada_x, tramite.coordenada_y]
+#                 },
+#                 "properties": {
+#                     "Usuario": tramite.id_solicitud_tramite.id_persona_registra.user_set.all().exclude(id_usuario=1).first().nombre_de_usuario,
+#                     "Numero_Resolucion": "", # VALIDAR
+#                     "Expediente": UtilsGeoJson.get_expediente(tramite),
+#                     "Vigencia": "", # VALIDAR
+#                     "Fecha_Exacta_Inicio_Vigencia": tramite_sasoftco['FReserva_Inicial'], # VALIDAR
+#                     "Fecha_Expedicion_Resolucion": "", # VALIDAR
+#                     "Latitud": tramite.coordenada_x,
+#                     "Longitud": tramite.coordenada_y,
+#                     "Volumen_Aceite_Almacenado": tramite_sasoftco['Volac'],
+#                     "Tipo_Acopiador": tramite_sasoftco['Tacop_value'] if tramite_sasoftco['Tacop_value'] != 'Otro' else tramite_sasoftco['Tacop2'],
+#                     "Tipo_Aceite_Usado": tramite_sasoftco['Toil_value'] if tramite_sasoftco['Toil_value'] != 'Otro' else tramite_sasoftco['Toil2'],
+#                     "Sistema_Almacenamiento_Residuos": tramite_sasoftco['Sisalm_value'] if tramite_sasoftco['Sisalm_value'] != 'Otro' else tramite_sasoftco['Sisalm2']
+#                 }
+#             }
+
+#             GeoJson_list.append(GeoJson)
+
+#         geojson_final = {
+#             "type": "FeatureCollection",
+#             "crs": { 
+#                 "type": "name", 
+#                 "properties": { 
+#                     "name": "EPSG:4326" 
+#                 } 
+#             },
+#             "features": GeoJson_list
+#         }
+
+#         return Response(geojson_final)

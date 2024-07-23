@@ -24,6 +24,9 @@ urlpatterns=[
     path('tramite/certificacion_ambiental_automotores/get/',tramites_views.GeoJsonCertificacionAmbientalAutomotoresView.as_view(),name='geojson-certificacion-ambiental-automotores'),
     path('tramite/permiso_emisiones_atmosfericas/get/',tramites_views.GeoJsonPermisoEmisionesAtmosfericasView.as_view(),name='geojson-permiso-emisiones-atmosfericas'),
     path('tramite/inscripcion_acopiador_aceites/get/',tramites_views.GeoJsonInscripcionAcopiadorAceitesView.as_view(),name='geojson-inscripcion-acopiador-aceites'),
+    path('tramite/reporte_vivero/get/',tramites_views.GeoJsonReporteViveroView.as_view(),name='geojson-reporte-vivero'),
+    path('tramite/almacenamiento_sustancias_nocivas/get/',tramites_views.GeoJsonAlmacenamientoSustanciasNocivasView.as_view(),name='geojson-almacenamiento-sustancias-nocivas'),
+    path('tramite/registro_libro_operaciones/get/',tramites_views.GeoJsonRegistroLibroOperacionesView.as_view(),name='geojson-registro-libro-operaciones'),
     # path('tramite/pqrsdf/get/',tramites_views.GeoJsonPQRSDFView.as_view(),name='geojson-pqrsdf'),
 
     #Opas

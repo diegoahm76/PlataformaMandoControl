@@ -23,6 +23,7 @@ urlpatterns=[
     path('tramite/recoleccion_especimenes/get/',tramites_views.GeoJsonRecoleccionEspecimenesView.as_view(),name='geojson-recoleccion-especimenes'),
     path('tramite/certificacion_ambiental_automotores/get/',tramites_views.GeoJsonCertificacionAmbientalAutomotoresView.as_view(),name='geojson-certificacion-ambiental-automotores'),
     path('tramite/permiso_emisiones_atmosfericas/get/',tramites_views.GeoJsonPermisoEmisionesAtmosfericasView.as_view(),name='geojson-permiso-emisiones-atmosfericas'),
+    path('tramite/inscripcion_acopiador_aceites/get/',tramites_views.GeoJsonInscripcionAcopiadorAceitesView.as_view(),name='geojson-inscripcion-acopiador-aceites'),
 
     #Opas
     path('opa/inscripcion_dga/get/',opas_views.GeoJsonInscripcionDGAView.as_view(),name='geojson-inscripcion-dga'),

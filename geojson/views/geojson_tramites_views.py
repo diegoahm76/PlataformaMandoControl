@@ -802,3 +802,52 @@ class GeoJsonPermisoEmisionesAtmosfericasView(generics.ListAPIView):
         }
 
         return Response(geojson_final)
+    
+class GeoJsonInscripcionAcopiadorAceitesView(generics.ListAPIView):
+    # permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        tramites = PermisosAmbSolicitudesTramite.objects.filter(id_permiso_ambiental__cod_tipo_permiso_ambiental = 'RE', id_permiso_ambiental__nombre__icontains = 'Registro de Inscripción de acopiadores primarios de aceites lubricantes usados')
+
+        GeoJson_list = []
+
+        for tramite in tramites:
+            tramite_sasoftco = UtilsGeoJson.get_tramite_sasoftco(tramite)
+
+            if tramite_sasoftco:
+                GeoJson = {
+                    "Feature": tramite.id_permiso_ambiental.get_cod_tipo_permiso_ambiental_display(),
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [tramite.coordenada_x, tramite.coordenada_y]
+                    },
+                    "properties": {
+                        "Usuario": tramite.id_solicitud_tramite.id_persona_registra.user_set.all().exclude(id_usuario=1).first().nombre_de_usuario,
+                        "Numero_Resolucion": "", # VALIDAR
+                        "Expediente": UtilsGeoJson.get_expediente(tramite),
+                        "Vigencia": "", # VALIDAR
+                        "Fecha_Exacta_Inicio_Vigencia": tramite_sasoftco['FReserva_Inicial'], # VALIDAR
+                        "Fecha_Expedicion_Resolucion": "", # VALIDAR
+                        "Latitud": tramite.coordenada_x,
+                        "Longitud": tramite.coordenada_y,
+                        "Volumen_Aceite_Almacenado": tramite_sasoftco['Volac'], # VALIDAR
+                        "Tipo_Acopiador": tramite_sasoftco['Tacop_value'] if tramite_sasoftco['Tacop_value'] != 'Otro' else tramite_sasoftco['Tacop2'],
+                        "Tipo_Aceite_Usado": tramite_sasoftco['Toil_value'] if tramite_sasoftco['Toil_value'] != 'Otro' else tramite_sasoftco['Toil2'],
+                        "Sistema_Almacenamiento_Residuos": tramite_sasoftco['Sisalm_value'] if tramite_sasoftco['Sisalm_value'] != 'Otro' else tramite_sasoftco['Sisalm2']
+                    }
+                }
+
+                GeoJson_list.append(GeoJson)
+
+        geojson_final = {
+            "type": "FeatureCollection",
+            "crs": { 
+                "type": "name", 
+                "properties": { 
+                    "name": "EPSG:4326" 
+                } 
+            },
+            "features": GeoJson_list
+        }
+
+        return Response(geojson_final)

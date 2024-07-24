@@ -14,7 +14,7 @@ services: # the different images that will be running as containers
     env_file: 
       - .env # name of the env file
     # name of the image
-    image: PlataformaMandoControl-app 
+    image: plataformamandocontrol-app 
     # expose the port to other services defined here so that they can access this service via the exposed port. In the case of Django, this is 8000 by default
     ports: 
       - 8000:8000 # retrieved from the .env file

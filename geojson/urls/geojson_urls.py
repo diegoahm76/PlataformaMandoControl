@@ -27,7 +27,7 @@ urlpatterns=[
     path('tramite/reporte_vivero/get/',tramites_views.GeoJsonReporteViveroView.as_view(),name='geojson-reporte-vivero'),
     path('tramite/almacenamiento_sustancias_nocivas/get/',tramites_views.GeoJsonAlmacenamientoSustanciasNocivasView.as_view(),name='geojson-almacenamiento-sustancias-nocivas'),
     path('tramite/registro_libro_operaciones/get/',tramites_views.GeoJsonRegistroLibroOperacionesView.as_view(),name='geojson-registro-libro-operaciones'),
-    # path('tramite/pqrsdf/get/',tramites_views.GeoJsonPQRSDFView.as_view(),name='geojson-pqrsdf'),
+    path('tramite/pqrsdf/get/',tramites_views.GeoJsonPQRSDFView.as_view(),name='geojson-pqrsdf'),
 
     #Opas
     path('opa/inscripcion_dga/get/',opas_views.GeoJsonInscripcionDGAView.as_view(),name='geojson-inscripcion-dga'),

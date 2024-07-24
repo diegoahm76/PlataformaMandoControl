@@ -862,53 +862,55 @@ class GeoJsonInscripcionAcopiadorAceitesView(generics.ListAPIView):
 
         return Response(geojson_final)
     
-# class GeoJsonPQRSDFView(generics.ListAPIView):
-#     # permission_classes = [IsAuthenticated]
+class GeoJsonPQRSDFView(generics.ListAPIView):
+    # permission_classes = [IsAuthenticated]
 
-#     def get(self, request):
-#         pqrsdfs = PQRSDF.objects.all()
+    def get(self, request):
+        pqrsdfs = PQRSDF.objects.all()
 
-#         GeoJson_list = []
+        GeoJson_list = []
 
-#         for pqrsdf in pqrsdfs:
-#             GeoJson = {
-#                 "type": "Feature",
-#                 "id": pqrsdf.id_PQRSDF,
-#                 "geometry": {
-#                     "type": "Point",
-#                     "coordinates": [tramite.coordenada_x, tramite.coordenada_y]
-#                 },
-#                 "properties": {
-#                     "Usuario": tramite.id_solicitud_tramite.id_persona_registra.user_set.all().exclude(id_usuario=1).first().nombre_de_usuario,
-#                     "Numero_Resolucion": "", # VALIDAR
-#                     "Expediente": UtilsGeoJson.get_expediente(tramite),
-#                     "Vigencia": "", # VALIDAR
-#                     "Fecha_Exacta_Inicio_Vigencia": tramite_sasoftco['FReserva_Inicial'], # VALIDAR
-#                     "Fecha_Expedicion_Resolucion": "", # VALIDAR
-#                     "Latitud": tramite.coordenada_x,
-#                     "Longitud": tramite.coordenada_y,
-#                     "Volumen_Aceite_Almacenado": tramite_sasoftco['Volac'],
-#                     "Tipo_Acopiador": tramite_sasoftco['Tacop_value'] if tramite_sasoftco['Tacop_value'] != 'Otro' else tramite_sasoftco['Tacop2'],
-#                     "Tipo_Aceite_Usado": tramite_sasoftco['Toil_value'] if tramite_sasoftco['Toil_value'] != 'Otro' else tramite_sasoftco['Toil2'],
-#                     "Sistema_Almacenamiento_Residuos": tramite_sasoftco['Sisalm_value'] if tramite_sasoftco['Sisalm_value'] != 'Otro' else tramite_sasoftco['Sisalm2']
-#                 }
-#             }
+        for pqrsdf in pqrsdfs:
+            GeoJson = {
+                "type": "Feature",
+                "id": pqrsdf.id_PQRSDF,
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [pqrsdf.id_sucursal_especifica_implicada.direccion_sucursal_georeferenciada_lat, pqrsdf.id_sucursal_especifica_implicada.direccion_sucursal_georeferenciada_lon]
+                },
+                "properties": {
+                    "Municipio" : pqrsdf.id_sucursal_especifica_implicada.municipio.nombre, # VALIDAR
+                    "Tipo_Solicitud": pqrsdf.get_cod_tipo_PQRSDF_display(),
+                    "Recurso_Afectado": "", # VALIDAR
+                    "Zona": "", # VALIDAR
+                    "Departamento": pqrsdf.id_sucursal_especifica_implicada.municipio.cod_departamento.nombre, # VALIDAR
+                    "Fecha_Registro": pqrsdf.fecha_registro,
+                    "Solicitud": pqrsdf.descripcion,
+                    "Estado": pqrsdf.id_estado_actual_solicitud.nombre,
+                    "Grupo": pqrsdf.id_persona_titular.id_unidad_organizacional_actual.nombre if pqrsdf.id_persona_titular and pqrsdf.id_persona_titular.id_unidad_organizacional_actual else "", # VALIDAR
+                    "Fecha_Inicio_Vigencia": "", # VALIDAR
+                    "Fecha_Fin_Vigencia": "", # VALIDAR
+                    "Tema": pqrsdf.asunto,
+                    "Medio_Interposicion": pqrsdf.id_medio_solicitud.nombre,
+                    "Tipo_Persona": pqrsdf.id_persona_titular.get_tipo_persona_display() if pqrsdf.id_persona_titular else "", # VALIDAR
+                    "Medio_Respuesta": "", # VALIDAR
+                }
+            }
 
-#             GeoJson_list.append(GeoJson)
+            GeoJson_list.append(GeoJson)
 
-#         geojson_final = {
-#             "type": "FeatureCollection",
-#             "crs": { 
-#                 "type": "name", 
-#                 "properties": { 
-#                     "name": "EPSG:4326" 
-#                 } 
-#             },
-#             "features": GeoJson_list
-#         }
+        geojson_final = {
+            "type": "FeatureCollection",
+            "crs": { 
+                "type": "name", 
+                "properties": { 
+                    "name": "EPSG:4326" 
+                } 
+            },
+            "features": GeoJson_list
+        }
 
-#         return Response(geojson_final)
-    
+        return Response(geojson_final)
 
 class GeoJsonReporteViveroView(generics.ListAPIView):
 

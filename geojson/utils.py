@@ -40,7 +40,7 @@ class UtilsGeoJson:
     
     @staticmethod
     def get_nombre_persona(persona):
-        nombre_completo_persona = None
+        nombre_completo_persona = ""
         if persona.tipo_persona == 'J':
             nombre_completo_persona = persona.razon_social
         else:
@@ -50,3 +50,10 @@ class UtilsGeoJson:
             nombre_completo_persona = nombre_completo_persona if nombre_completo_persona != "" else None
             
         return nombre_completo_persona
+    
+    @staticmethod
+    def get_expediente(tramite):
+        expediente = ""
+        if tramite.id_solicitud_tramite.id_expediente:
+            expediente = f"{tramite.id_solicitud_tramite.id_expediente.codigo_exp_und_serie_subserie}-{tramite.id_solicitud_tramite.id_expediente.codigo_exp_Agno}-{tramite.id_solicitud_tramite.id_expediente.codigo_exp_consec_por_agno}"
+        return expediente

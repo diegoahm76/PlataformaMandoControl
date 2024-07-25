@@ -11,13 +11,29 @@ urlpatterns=[
     path('tramite/CE/get/',tramites_views.GeoJsonCertificacionAmbientalDesintegracionVehicularView.as_view(),name='geojson-certificacion-ambiental-desintegracion-vehicular'),
     path('tramite/inscripcion_gestor_rcd/get/',tramites_views.GeoJsonInscripcionGestorRCDView.as_view(),name='geojson-inscripcion-generador-rcd'),
     path('tramite/licencia_ambiental_transferencia_electrica/get/',tramites_views.GeoJsonLicenciaAmbientalTransElectricaView.as_view(),name='geojson-licencia-ambiental-transferencia-eléctrica'),
-    path('tramite/permiso_ocupación_cauce_playa_y_lechos/get/',tramites_views.GeoJsonPermisoOcupacionCaucePlayaLechosView.as_view(),name='geojson-permiso-ocupación-cauce-playa-y-lechos'),
+    path('tramite/licencia_plantas_fotovoltaicas/get/',tramites_views.GeoJsonLicenciaPlantasFotovoltaicasView.as_view(),name='geojson-licencia-plantas-fotovoltaicas'),
+    path('tramite/permiso_ocupacion_playa/get/',tramites_views.GeoJsonPermisoOcupacionPlayaView.as_view(),name='geojson-permiso-ocupacion-playa'),
     path('tramite/aprovechamiento_carbon_vegetal/get/',tramites_views.GeoJsonAprovechamientoCarbonVegetalMovilizacionView.as_view(),name='geojson-aprovechamiento-carbon-vegetal'),
     path('tramite/aprovechamiento_ambiental_productos_f/get/',tramites_views.GeoJsonAprovechamientoProductosForestalesView.as_view(),name='geojson-aprovechamiento-ambiental-productos-f'), 
     path('tramite/permiso_vertimientos_agua/get/',tramites_views.GeoJsonPermisoVertimientosAguaView.as_view(),name='geojson-permiso-vertimientos-agua'),
     path('tramite/permiso_vertimientos_suelo/get/',tramites_views.GeoJsonPermisoVertimientosSueloView.as_view(),name='geojson-permiso-vertimientos-agua'),
     path('tramite/concesion_aguas_superficiales/get/',tramites_views.GeoJsonConcesionAguasSuperficialesView.as_view(),name='geojson-concesion-aguas-superficiales'),
     path('tramite/concesion_aguas_subterraneas/get/',tramites_views.GeoJsonConcesionAguasSubterraneasView.as_view(),name='geojson-concesion-aguas-subterraneas'),
+    path('tramite/permiso_prospeccion_aguas_subterraneas/get/',tramites_views.GeoJsonPermisosProspeccionAguasSubterraneasView.as_view(),name='geojson-permiso-prospeccion-agua'),
+    path('tramite/planes_contingencia_estaciones_servicio/get/',tramites_views.GeoJsonPlanesContingenciaEstacionesServicioView.as_view(),name='geojson-planes-contingencia-estaciones-servicio'),
+    path('tramite/proyectos_industriales_minerias/get/',tramites_views.GeoJsonProyectosIndustrialesMineriasView.as_view(),name='geojson-proyectos-industriales-minerias'),
+    path('tramite/permiso_ocupacion_cauces/get/',tramites_views.GeoJsonPermisoOcupacionCaucesView.as_view(),name='geojson-permiso-ocupacion-cauces'),
+    path('tramite/recoleccion_especimenes/get/',tramites_views.GeoJsonRecoleccionEspecimenesView.as_view(),name='geojson-recoleccion-especimenes'),
+    path('tramite/aprovechamientos_forestales/get/',tramites_views.GeoJsonAprovechamientoForestalView.as_view(),name='geojson-aprechamientos-forestales'),
+    path('tramite/permiso_aprovechamiento_forestal_doméstico/get/',tramites_views.GeoJsonAprovechamientoForestalDomesticoView.as_view(),name='geojson-permiso-aprovechamiento-forestal-doméstico'),
+    path('tramite/solicitud_determinantes_ambientales_planes_parciales/get/',tramites_views.GeoJsonSolicitudDeterminantesAmbientalesPlanesParcialesView.as_view(),name='geojson-solicitud-determinantes-ambientales-planes-parciales'),
+    path('tramite/certificacion_ambiental_automotores/get/',tramites_views.GeoJsonCertificacionAmbientalAutomotoresView.as_view(),name='geojson-certificacion-ambiental-automotores'),
+    path('tramite/permiso_emisiones_atmosfericas/get/',tramites_views.GeoJsonPermisoEmisionesAtmosfericasView.as_view(),name='geojson-permiso-emisiones-atmosfericas'),
+    path('tramite/inscripcion_acopiador_aceites/get/',tramites_views.GeoJsonInscripcionAcopiadorAceitesView.as_view(),name='geojson-inscripcion-acopiador-aceites'),
+    path('tramite/reporte_vivero/get/',tramites_views.GeoJsonReporteViveroView.as_view(),name='geojson-reporte-vivero'),
+    path('tramite/almacenamiento_sustancias_nocivas/get/',tramites_views.GeoJsonAlmacenamientoSustanciasNocivasView.as_view(),name='geojson-almacenamiento-sustancias-nocivas'),
+    path('tramite/registro_libro_operaciones/get/',tramites_views.GeoJsonRegistroLibroOperacionesView.as_view(),name='geojson-registro-libro-operaciones'),
+    path('tramite/pqrsdf/get/',tramites_views.GeoJsonPQRSDFView.as_view(),name='geojson-pqrsdf'),
 
     #Opas
     path('opa/inscripcion_dga/get/',opas_views.GeoJsonInscripcionDGAView.as_view(),name='geojson-inscripcion-dga'),
@@ -45,6 +61,7 @@ urlpatterns=[
     path('PM/registro_plantaciones_forestales/get/',permisosmenores_views.GeoJsonRegistroPlantacionesForestales.as_view(),name='geojson-registro-plantaciones-forestales'),
     path('PM/licencia_establecimiento_zoocriadero/get/',permisosmenores_views.GeoJsonRegistroLicenciaZoocriadero.as_view(),name='geojson-licencia-establecimiento-zoocriadero'),
     path('PM/permiso_zoologico/get/',permisosmenores_views.GeoJsonPermisoZoologico.as_view(),name='geojson-permiso-zoologico'),
+    path('PM/jardines_botanicos/get/',permisosmenores_views.GeoJsonJardinesBotanicosView.as_view(),name='geojson-jardines-botanicos'),
 
 
     

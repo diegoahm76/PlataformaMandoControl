@@ -48,7 +48,7 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='index.html')),
 
     #ESTACIONES
-    path("api/geojson/",include('geojson.urls.geojson_urls')),
+    path("apimando/geojson/",include('geojson.urls.geojson_urls')),
 
 
     

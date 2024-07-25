@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import generics,status
 from rest_framework.permissions import IsAuthenticated
 from geojson.utils import UtilsGeoJson
-from geojson.models.tramites_models import PermisosAmbSolicitudesTramite
+from geojson.models.tramites_models import PermisosAmbSolicitudesTramite, Predios
     
 class GeoJsonCertificacionInscripcionControlView(generics.ListAPIView):
     # permission_classes = [IsAuthenticated,]
@@ -283,3 +283,59 @@ class GeoJsonPermisoZoologico(generics.ListAPIView):
 
         return Response(geojson_final)
 
+
+
+class GeoJsonJardinesBotanicosView(generics.ListAPIView):
+    # permission_classes = [IsAuthenticated,]
+
+    def get(self, request):
+        permisos_menores = PermisosAmbSolicitudesTramite.objects.filter(
+            id_permiso_ambiental__cod_tipo_permiso_ambiental='PM',
+            id_permiso_ambiental__nombre__icontains='Permiso ambiental de jardines botánicos'
+        )
+
+        GeoJson_list = []
+
+        for permiso_menor in permisos_menores:
+            predios = Predios.objects.filter(id_solicitud_tramite=permiso_menor.id_solicitud_tramite)
+
+            for predio in predios:
+                GeoJson = {
+                    "type": "Feature",
+                    "id": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [permiso_menor.coordenada_x, permiso_menor.coordenada_y]
+                    },
+                    "properties": {
+                        "OBJECTID": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
+                        "Usuario": permiso_menor.id_solicitud_tramite.id_persona_registra.user_set.all().exclude(id_usuario=1).first().nombre_de_usuario,
+                        "Matricula_Inmobiliaria": predio.matricula_inmobiliaria, #VALIDAR
+                        "Latitud": permiso_menor.coordenada_x,
+                        "Longitud": permiso_menor.coordenada_y,
+                        "Uso_Suelo_POT":"", # VALIDAR
+                        "Area":"", # VALIDAR
+                        "Nombre_Beneficiario":"", # VALIDAR
+                        "Identificacion_Beneficiario":"", # VALIDAR
+                        "Numero_Expediente": UtilsGeoJson.get_expediente(permiso_menor),
+                        "Termino_Licencia": "", # VALIDAR
+                        "Resolucion": "", # VALIDAR
+                        "Fecha_Inicio_Vigencia": "", # VALIDAR
+                        "Fecha_Fin_Vigencia": "" # VALIDAR
+
+                    }
+                }
+                GeoJson_list.append(GeoJson)
+
+        geojson_final = {
+            "type": "FeatureCollection",
+            "crs": { 
+                "type": "name", 
+                "properties": { 
+                    "name": "EPSG:4326" 
+                } 
+            },
+            "features": GeoJson_list
+        }
+
+        return Response(geojson_final)

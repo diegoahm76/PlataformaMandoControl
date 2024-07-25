@@ -16,6 +16,8 @@ urlpatterns=[
     path('tramite/aprovechamiento_ambiental_productos_f/get/',tramites_views.GeoJsonAprovechamientoProductosForestalesView.as_view(),name='geojson-aprovechamiento-ambiental-productos-f'), 
     path('tramite/permiso_vertimientos_agua/get/',tramites_views.GeoJsonPermisoVertimientosAguaView.as_view(),name='geojson-permiso-vertimientos-agua'),
     path('tramite/permiso_vertimientos_suelo/get/',tramites_views.GeoJsonPermisoVertimientosSueloView.as_view(),name='geojson-permiso-vertimientos-agua'),
+    path('tramite/concesion_aguas_superficiales/get/',tramites_views.GeoJsonConcesionAguasSuperficialesView.as_view(),name='geojson-concesion-aguas-superficiales'),
+    path('tramite/concesion_aguas_subterraneas/get/',tramites_views.GeoJsonConcesionAguasSubterraneasView.as_view(),name='geojson-concesion-aguas-subterraneas'),
 
     #Opas
     path('opa/inscripcion_dga/get/',opas_views.GeoJsonInscripcionDGAView.as_view(),name='geojson-inscripcion-dga'),

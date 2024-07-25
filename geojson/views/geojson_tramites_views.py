@@ -1245,9 +1245,10 @@ class GeoJsonSolicitudDeterminantesAmbientalesPlanesParcialesView(generics.ListA
 
 class GeoJsonLicenciaPlantasFotovoltaicasView(generics.ListAPIView):
     # permission_classes = [IsAuthenticated]
+    queryset = PermisosAmbSolicitudesTramite.objects.filter(id_permiso_ambiental__cod_tipo_permiso_ambiental = 'LA', id_permiso_ambiental__nombre__icontains = 'Licencias de plantas fotovoltaica')
 
     def get(self, request):
-        tramites = PermisosAmbSolicitudesTramite.objects.filter(id_permiso_ambiental__cod_tipo_permiso_ambiental = 'LA', id_permiso_ambiental__nombre__icontains = 'Licencias de plantas fotovoltaica')
+        tramites = self.queryset.all()
 
         GeoJson_list = []
 

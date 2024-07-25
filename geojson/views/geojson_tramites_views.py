@@ -1280,8 +1280,18 @@ class GeoJsonLicenciaPlantasFotovoltaicasView(generics.ListAPIView):
 
                 GeoJson_list.append(GeoJson)
 
+        geojson_final = {
+            "type": "FeatureCollection",
+            "crs": { 
+                "type": "name", 
+                "properties": { 
+                    "name": "EPSG:4326" 
+                } 
+            },
+            "features": GeoJson_list
+        }
     
-        return Response(GeoJson_list)
+        return Response(geojson_final)
     
 
 

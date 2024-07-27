@@ -33,14 +33,14 @@ class GeoJsonDeterminantesAmbientalesView(generics.ListAPIView):
                         "municipio": tramite_sasoftco['MunPredio'],
                         "tipo_determinante": tramite_sasoftco['typeProcedure'],
                         "tipo_elementos_proteccion": tramite_sasoftco['Area'],
-                        #"nombre_geografico": tramite.fecha_creacion, validar
-                        #"area": tramite_sasoftco['ConceptP3'], Validar
+                        "nombre_geografico": "", # Validar
+                        "area": "", # Validar
                         "latitud": tramite_sasoftco['UbiEcosis'].split(',')[0],
                         "longitud": tramite_sasoftco['UbiEcosis'].split(',')[1],
                         "expediente": tramite_sasoftco['NumExp'],
                         "usuario": UtilsGeoJson.get_nombre_persona(tramite.id_solicitud_tramite.id_persona_titular),
-                        #"resolucion": tramite_sasoftco['NumResol'], Validar
-                        #"fecha_resolucion": tramite_sasoftco['Fecha_Resolu'], Validar
+                        "resolucion": "", # Validar
+                        "fecha_resolucion": "", # Validar
                         "estado": tramite.id_solicitud_tramite.id_estado_actual_solicitud.nombre,
                     }
                 }
@@ -85,9 +85,9 @@ class GeoJsonCertificacionAmbientalDesintegracionVehicularView(generics.ListAPIV
                     "properties": {
                         "OBJECTID": tramite.id_solicitud_tramite.id_solicitud_tramite,
                         "usuario": UtilsGeoJson.get_nombre_persona(tramite.id_solicitud_tramite.id_persona_titular),
-                        #"resolucion": tramite_sasoftco['NumResol'], Validar
+                        "resolucion": "", # Validar
                         "expediente": tramite_sasoftco['NumExp'],
-                        #"vigencia": tramite_sasoftco['Vigencia'], #Validar
+                        "vigencia": "", #Validar
                         "fecha_expedicion_resolucion": tramite_sasoftco['Fecha_Resolu'], #Validar
                         "municipio": tramite_sasoftco['MunPredio'],
                         "fecha_inicio_vigencia": tramite_sasoftco['FechaIniVig'], #Validar
@@ -140,8 +140,8 @@ class GeoJsonInscripcionGestorRCDView(generics.ListAPIView):
                         "longitud": tramite.coordenada_y,
                         "fecha_incio_obra": tramite_sasoftco['FReserva_Inicial'],
                         "fecha_estimada_finalizacion": tramite_sasoftco['FReserva_Final'],
-                        "rcd_susceptibles_aprovechamiento": tramite_sasoftco['procesoaprovechamiento'],#Validar
-                        # "rcd_no_susceptibles_aprovechamiento": tramite_sasoftco['procesoaprovechamiento'],#Validar
+                        "rcd_susceptibles_aprovechamiento": tramite_sasoftco['procesoaprovechamiento'], #Validar
+                        "rcd_no_susceptibles_aprovechamiento": "", #Validar
                         "Fecha_Inscripcion": tramite.id_solicitud_tramite.fecha_registro.date(),
 
                         
@@ -274,6 +274,7 @@ class GeoJsonAprovechamientoCarbonVegetalMovilizacionView(generics.ListAPIView):
 
         for tramite in tramites:
             tramite_sasoftco = UtilsGeoJson.get_tramite_sasoftco(tramite)
+            print(tramite_sasoftco)
  
             if tramite_sasoftco:
                 GeoJson = {
@@ -290,16 +291,16 @@ class GeoJsonAprovechamientoCarbonVegetalMovilizacionView(generics.ListAPIView):
                         "municipio": tramite_sasoftco['MunPredio'],
                         "latitud": tramite_sasoftco['Mapa2'].split(',')[0],
                         "longitud": tramite_sasoftco['Mapa2'].split(',')[1],
-                        #"altura": tramite_sasoftco['Altura'] Validar,
+                        "altura": tramite_sasoftco['Altura'], # Validar,
                         "Municipio": tramite_sasoftco['Municipio'],
-                        #"uso_suelo": tramite_sasoftco['UsoSuelo'] Validar,
+                        "uso_suelo": "", # Validar,
                         "usuario": UtilsGeoJson.get_nombre_persona(tramite.id_solicitud_tramite.id_persona_titular),
                         "expediente": tramite_sasoftco['NumExp'],
-                        #"resolucion": tramite_sasoftco['NumResol'] Validar,
-                        #"expedicion": tramite_sasoftco['Fecha_Resolu'] validar,
-                        #"termino_permiso": tramite_sasoftco['FechaIniVig'], #Validar
-                        #"fecha_fin_vigencia": tramite_sasoftco['FechaFinVig'], #Validar
-                        #"fecha_inicio_vigencia": tramite_sasoftco['FechaIniVig'], #Validar
+                        "resolucion": "", # Validar,
+                        "expedicion": "", # validar,
+                        "termino_permiso": "", #Validar
+                        "fecha_fin_vigencia": "", #Validar
+                        "fecha_inicio_vigencia": "", #Validar
                     }
                 }
 
@@ -392,17 +393,17 @@ class GeoJsonAprovechamientoProductosForestalesView(generics.ListAPIView):
                         "municipio": tramite_sasoftco['MunPredio'],
                         "latitud": tramite_sasoftco['LatitudF'].split(',')[0],
                         "longitud": tramite_sasoftco['LatitudF'].split(',')[1],
-                        #"altura": tramite_sasoftco['Altura'] Validar,
+                        "altura": "", # Validar
                         "Municipio": tramite_sasoftco['MunPredio'],
-                        #"uso_suelo": tramite_sasoftco['UsoSuelo'] Validar,
+                        "uso_suelo": "", # Validar
                         "usuario": UtilsGeoJson.get_nombre_persona(tramite.id_solicitud_tramite.id_persona_titular),
                         "expediente": tramite_sasoftco['NumExp'],
-                        #"resolucion": tramite_sasoftco['NumResol'] Validar,
-                        #"fecha_expedicion": tramite_sasoftco['Fecha_Resolu'] validar,
-                        #"termino_permiso": tramite_sasoftco['FechaIniVig'], #Validar
-                        #"vigencia": tramite_sasoftco['FechaFinVig'], #Validars
-                        #"fecha_fin_vigencia": tramite_sasoftco['FechaFinVig'], #Validar
-                        #"fecha_inicio_vigencia": tramite_sasoftco['FechaIniVig'], #Validar
+                        "resolucion": "", # Validar
+                        "fecha_expedicion": "", # validar
+                        "termino_permiso": "", #Validar
+                        "vigencia": "", #Validars
+                        "fecha_fin_vigencia": "", #Validar
+                        "fecha_inicio_vigencia": "", #Validar
                     }
                 }
 
@@ -1313,12 +1314,12 @@ class GeoJsonConcesionAguasSubterraneasView(generics.ListAPIView):
                         "cedula_catastral": tramite_sasoftco['CCatas'],
                         "municipio": tramite_sasoftco['Mun_fuente'],
                         "vereda": tramite_sasoftco['Ndivision'],
-                        #"sector": tramite_sasoftco['Sector'], Validar
+                        "sector": "", # Validar
                         "usuario": UtilsGeoJson.get_nombre_persona(tramite.id_solicitud_tramite.id_persona_titular),
                         "resolucion": tramite_sasoftco['Resolu_Text'],
                         "expediente": tramite_sasoftco['NumExp'],
-                        #"fecha_expedicion": tramite_sasoftco['Fecha_Resolu'], Validar
-                       # "termino_permiso": tramite_sasoftco['FechaIniVig'], validar
+                        "fecha_expedicion": "", # Validar
+                        "termino_permiso": "", # validar
                         "fecha_inicio_vigencia": tramite_sasoftco['Fech_Exp_Legal_Point'],
                         "fecha_fin_vigencia": tramite_sasoftco['Fech_Venci_Legal_Pont'],
                         "fuente_captacion": tramite_sasoftco['Name_fuente_hidrica1'],
@@ -1326,8 +1327,8 @@ class GeoJsonConcesionAguasSubterraneasView(generics.ListAPIView):
                         "profundidad": tramite_sasoftco['Profun_Point_Succ'],
                         "latitud": tramite_sasoftco['Mapa2'].split(',')[0],
                         "longitud": tramite_sasoftco['Mapa2'].split(',')[1],
-                        #"altura": tramite_sasoftco['Altura_mnsnm'], Validar
-                        #"numero_identificador_pozo": tramite_sasoftco['Num_Pozo'], validar
+                        "altura": "", # Validar
+                        "numero_identificador_pozo": "", # validar
                     }
                 }
 

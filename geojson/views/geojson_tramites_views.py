@@ -390,8 +390,8 @@ class GeoJsonAprovechamientoProductosForestalesView(generics.ListAPIView):
                         "OBJECTID": tramite.id_solicitud_tramite.id_solicitud_tramite,
                         "numero_matricula": tramite_sasoftco.get('MatriInmobi', ""),
                         "municipio": tramite_sasoftco.get('MunPredio', ""),
-                        "latitud": tramite_sasoftco['LatitudF'].split(',')[0] if tramite_sasoftco('LatitudF') else "",
-                        "longitud": tramite_sasoftco['LatitudF'].split(',')[1] if tramite_sasoftco('LatitudF') else "",
+                        "latitud": tramite_sasoftco['LatitudF'].split(',')[0] if tramite_sasoftco.get('LatitudF') else "",
+                        "longitud": tramite_sasoftco['LatitudF'].split(',')[1] if tramite_sasoftco.get('LatitudF') else "",
                         "altura": "", # Validar
                         "Municipio": tramite_sasoftco.get('MunPredio', ""),
                         "uso_suelo": "", # Validar
@@ -1271,12 +1271,12 @@ class GeoJsonConcesionAguasSuperficialesView(generics.ListAPIView):
                     "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [tramite_sasoftco['Mapa2'].split(',')[0] if tramite_sasoftco('Mapa2') else "", tramite_sasoftco['Mapa2'].split(',')[1] if tramite_sasoftco('Mapa2') else ""]
+                        "coordinates": [tramite_sasoftco['Mapa2'].split(',')[0] if tramite_sasoftco.get('Mapa2') else "", tramite_sasoftco['Mapa2'].split(',')[1] if tramite_sasoftco.get('Mapa2') else ""]
                     },
                     "properties": {
                         "OBJECTID": tramite.id_solicitud_tramite.id_solicitud_tramite,
                         "matricula_inmobiliaria": tramite_sasoftco.get('MatriInmobi', ""),
-                        "latitud": tramite_sasoftco['Mapa2'].split(',')[0] if tramite_sasoftco('Mapa2') else "",
+                        "latitud": tramite_sasoftco['Mapa2'].split(',')[0] if tramite_sasoftco.get('Mapa2') else "",
                         "altura": tramite_sasoftco.get('Altura_mnsnm', ""),
                         "municipio": tramite_sasoftco.get('Mun_fuente', ""),
                         "usuario": UtilsGeoJson.get_nombre_persona(tramite.id_solicitud_tramite.id_persona_titular),
@@ -1321,7 +1321,7 @@ class GeoJsonConcesionAguasSubterraneasView(generics.ListAPIView):
                     "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [tramite_sasoftco['Mapa2'].split(',')[0] if tramite_sasoftco('Mapa2') else "", tramite_sasoftco['Mapa2'].split(',')[1] if tramite_sasoftco('Mapa2') else ""]
+                        "coordinates": [tramite_sasoftco['Mapa2'].split(',')[0] if tramite_sasoftco.get('Mapa2') else "", tramite_sasoftco['Mapa2'].split(',')[1] if tramite_sasoftco.get('Mapa2') else ""]
                     },
                     "properties": {
                         "OBJECTID": tramite.id_solicitud_tramite.id_solicitud_tramite,

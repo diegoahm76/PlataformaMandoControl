@@ -918,34 +918,50 @@ class GeoJsonReporteViveroView(generics.ListAPIView):
 
     def get(self, request):
         viveros = Vivero.objects.all()
-        permisos_menores = PermisosAmbSolicitudesTramite.objects.filter(id_permiso_ambiental__cod_tipo_permiso_ambiental = 'RE', id_permiso_ambiental__nombre__icontains = 'Registro de vivero')
 
         GeoJson_list = []
 
-        for permiso_menor in permisos_menores:
+        for vivero in viveros:
 
             GeoJson = {
                 "type": "Feature",
-                "id": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
+                "id": vivero.id_vivero,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [permiso_menor.coordenada_x, permiso_menor.coordenada_y]
+                    "coordinates": [vivero.coordenadas_lat, vivero.coordenadas_lon]
                 },
                 "properties": {
-                    "OBJECTID": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
-                    "Nombre": permiso_menor.id_solicitud_tramite.nombre_proyecto,
-                    "Matricula_Inmobiliaria": "", # VALIDAR
-                    "Cedula_Catastral": "", # VALIDAR
-                    "Municipio" :permiso_menor.cod_municipio.nombre,
-                    "Vereda": "", # VALIDAR
-                    "Sector": "", # VALIDAR
-                    "Usuario": permiso_menor.id_solicitud_tramite.id_persona_registra.user_set.all().exclude(id_usuario=1).first().nombre_de_usuario,
-                    "Expediente": UtilsGeoJson.get_expediente(permiso_menor),
-                    "Resolucion":"", # VALIDAR
-                    "Fecha_Expedicion": "", # VALIDAR
-                    "Termino_Permiso": "", # VALIDAR
-                    "Fecha_Inicio": "", # VALIDAR
-                    "Fecha_Fin_Vigencia": "" # VALIDAR
+                    "OBJECTID": vivero.id_vivero,
+                    "nombre":vivero.nombre,
+                    "cod_municipio":vivero.cod_municipio.nombre,
+                    "direccion":vivero.direccion,
+                    "coordenadas_lat":vivero.coordenadas_lat,
+                    "coordenadas_lon":vivero.coordenadas_lon,
+                    "area_mt2":vivero.area_mt2,
+                    "area_propagacion_mt2":vivero.area_propagacion_mt2,
+                    "tiene_area_produccion":vivero.tiene_area_produccion,
+                    "tiene_areas_pep_sustrato":vivero.tiene_areas_pep_sustrato,
+                    "tiene_area_embolsado":vivero.tiene_area_embolsado,
+                    "cod_tipo_vivero":vivero.cod_tipo_vivero,
+                    "id_viverista_actual":vivero.id_viverista_actual.id_persona,
+                    "fecha_inicio_viverista_actual":vivero.fecha_inicio_viverista_actual,
+                    "cod_origen_recursos_vivero":vivero.cod_origen_recursos_vivero,
+                    "fecha_creacion":vivero.fecha_creacion,
+                    "id_persona_crea":vivero.id_persona_crea.id_persona,
+                    "en_funcionamiento":vivero.en_funcionamiento,
+                    "fecha_ultima_apertura":vivero.fecha_ultima_apertura,
+                    "id_persona_abre":vivero.id_persona_abre.id_persona,
+                    "justificacion_apertura":vivero.justificacion_apertura,
+                    "fecha_cierre_actual":vivero.fecha_cierre_actual,
+                    "id_persona_cierra":vivero.id_persona_cierra.id_persona,
+                    "justificacion_cierre":vivero.justificacion_cierre,
+                    "vivero_en_cuarentena":vivero.vivero_en_cuarentena,
+                    "fecha_inicio_cuarentena":vivero.fecha_inicio_cuarentena,
+                    "id_persona_cuarentena":vivero.id_persona_cuarentena.id_persona,
+                    "justificacion_cuarentena":vivero.justificacion_cuarentena,
+                    "ruta_archivo_creacion":vivero.ruta_archivo_creacion,
+                    "activo":vivero.activo,
+                    "item_ya_usado":vivero.item_ya_usado,
                 }
             }
             GeoJson_list.append(GeoJson)

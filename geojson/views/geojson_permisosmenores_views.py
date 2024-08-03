@@ -27,11 +27,11 @@ class GeoJsonCertificacionInscripcionControlView(generics.ListAPIView):
                     "Usuario": UtilsGeoJson.get_nombre_persona(permiso_menor.id_solicitud_tramite.id_persona_titular),
                     "latitud": permiso_menor.coordenada_x,
                     "longitud": permiso_menor.coordenada_y,
-                    "resolucion": permiso_menor.id_permiso_ambiental.resolucion, #Validar
+                    "resolucion": "", #Validar
                     "expediente": UtilsGeoJson.get_expediente(permiso_menor),
-                    "vigencia": permiso_menor.id_permiso_ambiental.vigencia, #Validar
-                    "fecha_expedicion_resolucion": permiso_menor.id_permiso_ambiental.fecha_expedicion, #Validar
-                    "fecha_exacta_inicio_vigencia": permiso_menor.id_permiso_ambiental.fecha_inicio_vigencia, #Validar
+                    "vigencia": "", #Validar
+                    "fecha_expedicion_resolucion": "", #Validar
+                    "fecha_exacta_inicio_vigencia": "", #Validar
                 }
             }
             GeoJson_list.append(GeoJson)

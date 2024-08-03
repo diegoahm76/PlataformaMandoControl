@@ -8,6 +8,7 @@ from geojson.utils import UtilsGeoJson
 from geojson.models.tramites_models import SolicitudesTramites, PermisosAmbientales, PermisosAmbSolicitudesTramite
 from geojson.models.estaciones_models import Estaciones, Datos
 from geojson.models.personas_models import Personas
+import datetime
 
 class GeoJsonEstacionesView(generics.ListAPIView):
     def get(self, request):
@@ -27,7 +28,13 @@ class GeoJsonEstacionesView(generics.ListAPIView):
                     persona_modifica = None
                 if persona_modifica is not None:
                     nombre_persona = ' '.join(filter(None, [persona_modifica.primer_nombre, persona_modifica.segundo_nombre, persona_modifica.primer_apellido, persona_modifica.segundo_apellido]))
-                
+            activo = False
+            if datos_estacion.fecha_registro is not None:
+                fecha_registro = datos_estacion.fecha_registro.strftime('%Y-%m-%d %H:%M:%S')
+                fecha_hoy = datetime.datetime.now() - datetime.timedelta(minutes=10)
+                if fecha_registro > fecha_hoy:
+                    activo = True
+            
             GeoJson = {
                 "type": "Feature",
                 "id": estacion.id_estacion,
@@ -44,6 +51,7 @@ class GeoJsonEstacionesView(generics.ListAPIView):
                     "fecha_modificacion": estacion.fecha_modificacion if estacion.fecha_modificacion is not None else " ",
                     "fecha_modificacion_coordenadas": estacion.fecha_modificacion_coordenadas if estacion.fecha_modificacion_coordenadas is not None else " ",
                     "id_persona_modifica": estacion.id_persona_modifica if estacion.id_persona_modifica is not None else " ",
+                    "activo": activo,
                     "nombre_persona_modifica": nombre_persona if nombre_persona is not None else " ",
                     "fecha_registro": datos_estacion.fecha_registro if datos_estacion is not None else " ",
                     "temperatura_ambiente": f'{datos_estacion.temperatura_ambiente} °C' if datos_estacion is not None else "0.00 °C",

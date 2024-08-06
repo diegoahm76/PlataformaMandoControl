@@ -40,7 +40,7 @@ class GeoJsonEstacionesView(generics.ListAPIView):
                 "id": estacion.id_estacion,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [float(estacion.longitud), float(estacion.latitud)]
+                    "coordinates": [float(estacion.latitud), float(estacion.longitud)]
                 },
                 "properties": {
                     "id_estacion": estacion.id_estacion,

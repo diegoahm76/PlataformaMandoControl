@@ -15,18 +15,19 @@ class GeoJsonCertificacionInscripcionControlView(generics.ListAPIView):
         GeoJson_list = []
 
         for permiso_menor in permisos_menores:
+            lat, lon = UtilsGeoJson.get_coordinates(permiso_menor.coordenada_x, permiso_menor.coordenada_y)
 
             GeoJson = {
                 "type": "Feature",
                 "id": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [permiso_menor.coordenada_x, permiso_menor.coordenada_y]
+                    "coordinates": [lat, lon]
                 },
                 "properties": {
                     "Usuario": UtilsGeoJson.get_nombre_persona(permiso_menor.id_solicitud_tramite.id_persona_titular),
-                    "latitud": permiso_menor.coordenada_x,
-                    "longitud": permiso_menor.coordenada_y,
+                    "latitud": lat,
+                    "longitud": lon,
                     "resolucion": "", #Validar
                     "expediente": UtilsGeoJson.get_expediente(permiso_menor),
                     "vigencia": "", #Validar
@@ -58,13 +59,14 @@ class GeoJsonPermisoCazaView(generics.ListAPIView):
         GeoJson_list = []
 
         for permiso_menor in permisos_menores:
+            lat, lon = UtilsGeoJson.get_coordinates(permiso_menor.coordenada_x, permiso_menor.coordenada_y)
 
             GeoJson = {
                 "type": "Feature",
                 "id": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [permiso_menor.coordenada_x, permiso_menor.coordenada_y]
+                    "coordinates": [lat, lon]
                 },
                 "properties": {
                     "OBJECTID": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
@@ -72,8 +74,8 @@ class GeoJsonPermisoCazaView(generics.ListAPIView):
                     "Fecha": permiso_menor.id_solicitud_tramite.fecha_registro.date(),
                     "Usuario": permiso_menor.id_solicitud_tramite.id_persona_registra.user_set.all().exclude(id_usuario=1).first().nombre_de_usuario,
                     "Numero_Expediente": UtilsGeoJson.get_expediente(permiso_menor),
-                    "Latitud": permiso_menor.coordenada_x,
-                    "Longitud": permiso_menor.coordenada_y,
+                    "Latitud": lat,
+                    "Longitud": lon,
                     "Termino_Permiso_Vigencia": "", # VALIDAR
                     "Numero_Resolucion": "", # VALIDAR
                     "Fecha_Inicio_Vigencia": "", # VALIDAR
@@ -104,20 +106,21 @@ class GeoJsonRedAmigosSilvestresView(generics.ListAPIView):
         GeoJson_list = []
 
         for permiso_menor in permisos_menores:
+            lat, lon = UtilsGeoJson.get_coordinates(permiso_menor.coordenada_x, permiso_menor.coordenada_y)
 
             GeoJson = {
                 "type": "Feature",
                 "id": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [permiso_menor.coordenada_x, permiso_menor.coordenada_y]
+                    "coordinates": [lat, lon]
                 },
                 "properties": {
                     "OBJECTID": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
                     "Usuario": permiso_menor.id_solicitud_tramite.id_persona_registra.user_set.all().exclude(id_usuario=1).first().nombre_de_usuario,
                     "Municipio": permiso_menor.cod_municipio.nombre,
-                    "Latitud": permiso_menor.coordenada_x,
-                    "Longitud": permiso_menor.coordenada_y,
+                    "Latitud": lat,
+                    "Longitud": lon,
                     "Numero_Expediente": UtilsGeoJson.get_expediente(permiso_menor),
                     "Tipo_Licencia_Funcionamiento": "", # VALIDAR
                     "Termino_Licencia": "", # VALIDAR
@@ -149,21 +152,22 @@ class GeoJsonRegistroPlantacionesForestales(generics.ListAPIView):
         GeoJson_list = []
 
         for permiso_menor in permisos_menores:
+            lat, lon = UtilsGeoJson.get_coordinates(permiso_menor.coordenada_x, permiso_menor.coordenada_y)
 
             GeoJson = {
                 "type": "Feature",
                 "id": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [permiso_menor.coordenada_x, permiso_menor.coordenada_y]
+                    "coordinates": [lat, lon]
                 },
                 "properties": {
                     "OBJECTID": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
                     "Nombre": "", # VALIDAR
                     "Numero_Matricula": "", # VALIDAR
                     "Numero_Codigo":"", # VALIDAR
-                    "Latitud": permiso_menor.coordenada_x,
-                    "Longitud": permiso_menor.coordenada_y, 
+                    "Latitud": lat,
+                    "Longitud": lon, 
                     "Altura": "", # VALIDAR
                     "Municipio" :permiso_menor.cod_municipio.nombre,
                     "Uso_Suelo_POT":"", # VALIDAR
@@ -200,13 +204,14 @@ class GeoJsonRegistroLicenciaZoocriadero(generics.ListAPIView):
         GeoJson_list = []
 
         for permiso_menor in permisos_menores:
+            lat, lon = UtilsGeoJson.get_coordinates(permiso_menor.coordenada_x, permiso_menor.coordenada_y)
 
             GeoJson = {
                 "type": "Feature",
                 "id": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [permiso_menor.coordenada_x, permiso_menor.coordenada_y]
+                    "coordinates": [lat, lon]
                 },
                 "properties": {
                     "OBJECTID": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
@@ -244,20 +249,21 @@ class GeoJsonPermisoZoologico(generics.ListAPIView):
         GeoJson_list = []
 
         for permiso_menor in permisos_menores:
+            lat, lon = UtilsGeoJson.get_coordinates(permiso_menor.coordenada_x, permiso_menor.coordenada_y)
 
             GeoJson = {
                 "type": "Feature",
                 "id": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [permiso_menor.coordenada_x, permiso_menor.coordenada_y]
+                    "coordinates": [lat, lon]
                 },
                 "properties": {
                     "OBJECTID": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
                     "Municipio" :permiso_menor.cod_municipio.nombre,
                     "Usuario": permiso_menor.id_solicitud_tramite.id_persona_registra.user_set.all().exclude(id_usuario=1).first().nombre_de_usuario,
-                    "Latitud": permiso_menor.coordenada_x,
-                    "Longitud": permiso_menor.coordenada_y,
+                    "Latitud": lat,
+                    "Longitud": lon,
                     "Tematica_Zoologico":"", # VALIDAR
                     "Numero_Expediente": UtilsGeoJson.get_expediente(permiso_menor),
                     "Tipo_Licencia_Funcionamiento": "", # VALIDAR
@@ -298,6 +304,7 @@ class GeoJsonJardinesBotanicosView(generics.ListAPIView):
 
         for permiso_menor in permisos_menores:
             predios = Predios.objects.filter(id_solicitud_tramite=permiso_menor.id_solicitud_tramite)
+            lat, lon = UtilsGeoJson.get_coordinates(permiso_menor.coordenada_x, permiso_menor.coordenada_y)
 
             for predio in predios:
                 GeoJson = {
@@ -305,14 +312,14 @@ class GeoJsonJardinesBotanicosView(generics.ListAPIView):
                     "id": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [permiso_menor.coordenada_x, permiso_menor.coordenada_y]
+                        "coordinates": [lat, lon]
                     },
                     "properties": {
                         "OBJECTID": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
                         "Usuario": permiso_menor.id_solicitud_tramite.id_persona_registra.user_set.all().exclude(id_usuario=1).first().nombre_de_usuario,
                         "Matricula_Inmobiliaria": predio.matricula_inmobiliaria, #VALIDAR
-                        "Latitud": permiso_menor.coordenada_x,
-                        "Longitud": permiso_menor.coordenada_y,
+                        "Latitud": lat,
+                        "Longitud": lon,
                         "Uso_Suelo_POT":"", # VALIDAR
                         "Area":"", # VALIDAR
                         "Nombre_Beneficiario":"", # VALIDAR

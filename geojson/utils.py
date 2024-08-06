@@ -4,6 +4,9 @@ import json
 from geojson.models.radicados_models import ConfigTiposRadicadoAgno
 from geojson.models.tramites_models import Tramites
 from rest_framework.exceptions import NotFound
+import json, random, requests
+from shapely.geometry import shape, Point
+from pyproj import Proj
 
 class UtilsGeoJson:
     @staticmethod
@@ -57,3 +60,60 @@ class UtilsGeoJson:
         if tramite.id_solicitud_tramite.id_expediente:
             expediente = f"{tramite.id_solicitud_tramite.id_expediente.codigo_exp_und_serie_subserie}-{tramite.id_solicitud_tramite.id_expediente.codigo_exp_Agno}-{tramite.id_solicitud_tramite.id_expediente.codigo_exp_consec_por_agno}"
         return expediente
+    
+    @staticmethod
+    def random_point_in_country(country_name: str) -> tuple:
+        url = "https://raw.githubusercontent.com/johan/world.geo.json/master/countries.geo.json"
+        try:
+            response = requests.get(url)
+            if response.status_code == 200:
+
+                data = json.loads(response.text)
+                country = [country for country in data["features"] if country["properties"]["name"] in country_name][0]
+
+                feature = shape(country["geometry"])
+                minx, miny, maxx, maxy = feature.bounds
+
+                while True:
+                    pnt = Point(random.uniform(minx, maxx), random.uniform(miny, maxy))
+                    if feature.contains(pnt):
+                        return float(pnt.y), float(pnt.x)
+
+        except Exception as e:
+            return 0, 0
+    
+    @staticmethod
+    def transform_coordinates(lat, lon) -> tuple:
+        p = Proj('+proj=tmerc +lat_0=4.0 +lon_0=-73.0 +k=0.9992 +x_0=5000000 +y_0=2000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs')
+        lon_final, lat_final = p(lon,lat)
+
+        return lat_final, lon_final
+        
+    @staticmethod
+    def get_coordinates(lat, lon, nacional=False) -> tuple:
+        lat_final = 0
+        lon_final = 0
+
+        if (not lat or not lon) or (lat == '' or lon == ''):
+            lat_final, lon_final  = UtilsGeoJson.random_point_in_country("Colombia")
+
+            # CONVERTIR A COORDENADAS NACIONALES
+            if nacional:
+                lat_final, lon_final  = UtilsGeoJson.transform_coordinates(lat_final, lon_final)
+        else:
+            if isinstance(lat, str) or isinstance(lon, str):
+                if lat.isdigit() or lon.isdigit():
+                    lat_final, lon_final  = UtilsGeoJson.random_point_in_country("Colombia")
+
+                    # CONVERTIR A COORDENADAS NACIONALES
+                    if nacional:
+                        lat_final, lon_final  = UtilsGeoJson.transform_coordinates(lat_final, lon_final)
+                else:
+                    lat_final = float(lat)
+                    lon_final = float(lon)
+            else:
+                lat_final = float(lat)
+                lon_final = float(lon)
+
+        return lat_final, lon_final
+        

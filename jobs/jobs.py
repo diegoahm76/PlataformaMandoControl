@@ -8,7 +8,5 @@ from datetime import datetime, timedelta
 
 
 def update_arcgis():
-	update_arcgis_layers() 
-	#alertas_generadas=AlertasProgramadas.objects.all()
-	#print(alertas_generadas)
-	print('TAREA FINALIZADA')
+	update_arcgis_layers()
+	print('FINISH CRONJOB')

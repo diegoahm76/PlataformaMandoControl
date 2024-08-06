@@ -17,4 +17,6 @@ def update_arcgis_layers():
 
     for geojson in geojsons_LIST:
         geojson_url = f"{backend_host}{geojson['url']}"
+        print(f"START {geojson['title']}")
         os.system(f"python ./scripts/OverwriteFS.py {profile} {geojson['id']} {geojson['title']} {geojson_url}")
+        print(f"FINISH {geojson['title']}")

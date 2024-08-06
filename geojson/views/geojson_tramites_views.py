@@ -54,7 +54,7 @@ class GeoJsonDeterminantesAmbientalesView(generics.ListAPIView):
             "crs": { 
                 "type": "name", 
                 "properties": { 
-                    "name": "EPSG:4326" 
+                    "name": "EPSG:9377" 
                 } 
             },
             "features": GeoJson_list
@@ -104,7 +104,7 @@ class GeoJsonCertificacionAmbientalDesintegracionVehicularView(generics.ListAPIV
             "crs": { 
                 "type": "name", 
                 "properties": { 
-                    "name": "EPSG:4326" 
+                    "name": "EPSG:9377" 
                 } 
             },
             "features": GeoJson_list
@@ -156,7 +156,7 @@ class GeoJsonInscripcionGestorRCDView(generics.ListAPIView):
             "crs": { 
                 "type": "name", 
                 "properties": { 
-                    "name": "EPSG:4326" 
+                    "name": "EPSG:9377" 
                 } 
             },
             "features": GeoJson_list
@@ -205,7 +205,7 @@ class GeoJsonLicenciaAmbientalTransElectricaView(generics.ListAPIView):
             "crs": { 
                 "type": "name", 
                 "properties": { 
-                    "name": "EPSG:4326" 
+                    "name": "EPSG:9377" 
                 } 
             },
             "features": GeoJson_list
@@ -255,7 +255,7 @@ class GeoJsonPermisoOcupacionPlayaView(generics.ListAPIView):
             "crs": { 
                 "type": "name", 
                 "properties": { 
-                    "name": "EPSG:4326" 
+                    "name": "EPSG:9377" 
                 } 
             },
             "features": GeoJson_list
@@ -310,7 +310,7 @@ class GeoJsonAprovechamientoCarbonVegetalMovilizacionView(generics.ListAPIView):
             "crs": { 
                 "type": "name", 
                 "properties": { 
-                    "name": "EPSG:4326" 
+                    "name": "EPSG:9377" 
                 } 
             },
             "features": GeoJson_list
@@ -413,7 +413,7 @@ class GeoJsonAprovechamientoProductosForestalesView(generics.ListAPIView):
             "crs": { 
                 "type": "name", 
                 "properties": { 
-                    "name": "EPSG:4326" 
+                    "name": "EPSG:9377" 
                 } 
             },
             "features": GeoJson_list
@@ -514,7 +514,7 @@ class GeoJsonPermisosProspeccionAguasSubterraneasView(generics.ListAPIView):
             "crs": { 
                 "type": "name", 
                 "properties": { 
-                    "name": "EPSG:4326" 
+                    "name": "EPSG:9377" 
                 } 
             },
             "features": GeoJson_list
@@ -564,7 +564,7 @@ class GeoJsonPlanesContingenciaEstacionesServicioView(generics.ListAPIView):
             "crs": { 
                 "type": "name", 
                 "properties": { 
-                    "name": "EPSG:4326" 
+                    "name": "EPSG:9377" 
                 } 
             },
             "features": GeoJson_list
@@ -608,7 +608,7 @@ class GeoJsonProyectosIndustrialesMineriasView(generics.ListAPIView):
             "crs": { 
                 "type": "name", 
                 "properties": { 
-                    "name": "EPSG:4326" 
+                    "name": "EPSG:9377" 
                 } 
             },
             "features": GeoJson_list
@@ -659,7 +659,7 @@ class GeoJsonPermisoOcupacionCaucesView(generics.ListAPIView):
             "crs": { 
                 "type": "name", 
                 "properties": { 
-                    "name": "EPSG:4326" 
+                    "name": "EPSG:9377" 
                 } 
             },
             "features": GeoJson_list
@@ -707,7 +707,7 @@ class GeoJsonRecoleccionEspecimenesView(generics.ListAPIView):
             "crs": { 
                 "type": "name", 
                 "properties": { 
-                    "name": "EPSG:4326" 
+                    "name": "EPSG:9377" 
                 } 
             },
             "features": GeoJson_list
@@ -754,7 +754,7 @@ class GeoJsonCertificacionAmbientalAutomotoresView(generics.ListAPIView):
             "crs": { 
                 "type": "name", 
                 "properties": { 
-                    "name": "EPSG:4326" 
+                    "name": "EPSG:9377" 
                 } 
             },
             "features": GeoJson_list
@@ -806,7 +806,7 @@ class GeoJsonPermisoEmisionesAtmosfericasView(generics.ListAPIView):
             "crs": { 
                 "type": "name", 
                 "properties": { 
-                    "name": "EPSG:4326" 
+                    "name": "EPSG:9377" 
                 } 
             },
             "features": GeoJson_list
@@ -856,7 +856,7 @@ class GeoJsonInscripcionAcopiadorAceitesView(generics.ListAPIView):
             "crs": { 
                 "type": "name", 
                 "properties": { 
-                    "name": "EPSG:4326" 
+                    "name": "EPSG:9377" 
                 } 
             },
             "features": GeoJson_list
@@ -1132,7 +1132,7 @@ class GeoJsonAprovechamientoForestalView(generics.ListAPIView):
             "crs": { 
                 "type": "name", 
                 "properties": { 
-                    "name": "EPSG:4326" 
+                    "name": "EPSG:9377" 
                 } 
             },
             "features": GeoJson_list
@@ -1191,7 +1191,7 @@ class GeoJsonAprovechamientoForestalDomesticoView(generics.ListAPIView):
             "crs": { 
                 "type": "name", 
                 "properties": { 
-                    "name": "EPSG:4326" 
+                    "name": "EPSG:9377" 
                 } 
             },
             "features": GeoJson_list
@@ -1247,7 +1247,7 @@ class GeoJsonSolicitudDeterminantesAmbientalesPlanesParcialesView(generics.ListA
             "crs": { 
                 "type": "name", 
                 "properties": { 
-                    "name": "EPSG:4326" 
+                    "name": "EPSG:9377" 
                 } 
             },
             "features": GeoJson_list
@@ -1296,7 +1296,7 @@ class GeoJsonConcesionAguasSuperficialesView(generics.ListAPIView):
             "crs": { 
                 "type": "name", 
                 "properties": { 
-                    "name": "EPSG:4326" 
+                    "name": "EPSG:9377" 
                 } 
             },
             "features": GeoJson_list
@@ -1354,7 +1354,7 @@ class GeoJsonConcesionAguasSubterraneasView(generics.ListAPIView):
             "crs": { 
                 "type": "name", 
                 "properties": { 
-                    "name": "EPSG:4326" 
+                    "name": "EPSG:9377" 
                 } 
             },
             "features": GeoJson_list
@@ -1447,7 +1447,7 @@ class GeoJsonLicenciaAmbientalNoConvencionalView(generics.ListAPIView):
             "crs": { 
                 "type": "name", 
                 "properties": { 
-                    "name": "EPSG:4326" 
+                    "name": "EPSG:9377" 
                 } 
             },
             "features": GeoJson_list
@@ -1496,7 +1496,7 @@ class GeoJsonLicenciaAmbientalTransferenciaFotovoltaicaView(generics.ListAPIView
             "crs": { 
                 "type": "name", 
                 "properties": { 
-                    "name": "EPSG:4326" 
+                    "name": "EPSG:9377" 
                 } 
             },
             "features": GeoJson_list
@@ -1545,7 +1545,7 @@ class GeoJsonLicenciaAmbientalRellenosSanitariosView(generics.ListAPIView):
             "crs": { 
                 "type": "name", 
                 "properties": { 
-                    "name": "EPSG:4326" 
+                    "name": "EPSG:9377" 
                 } 
             },
             "features": GeoJson_list
@@ -1597,7 +1597,7 @@ class GeoJsonLicenciaAmbientalAprovechamientoResiduosOrganicosView(generics.List
             "crs": { 
                 "type": "name", 
                 "properties": { 
-                    "name": "EPSG:4326" 
+                    "name": "EPSG:9377" 
                 } 
             },
             "features": GeoJson_list
@@ -1644,7 +1644,7 @@ class GeoJsonMedidasManejoAmbientalView(generics.ListAPIView):
             "crs": { 
                 "type": "name", 
                 "properties": { 
-                    "name": "EPSG:4326" 
+                    "name": "EPSG:9377" 
                 } 
             },
             "features": GeoJson_list

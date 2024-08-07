@@ -279,7 +279,7 @@ class GeoJsonAprovechamientoCarbonVegetalMovilizacionView(generics.ListAPIView):
 
         for tramite in tramites:
             tramite_sasoftco = UtilsGeoJson.get_tramite_sasoftco(tramite)
-            lat, lon = UtilsGeoJson.get_coordinates(tramite_sasoftco['Mapa2'].split(',')[0] if tramite_sasoftco.get('Mapa2') else "", tramite_sasoftco['Mapa2'].split(',')[1] if tramite_sasoftco.get('Mapa2') else "", True)
+            lat, lon = UtilsGeoJson.get_coordinates(tramite_sasoftco['Mapa2'].split(',')[0] if tramite_sasoftco.get('Mapa2') else "", tramite_sasoftco['Mapa2'].split(',')[1] if tramite_sasoftco.get('Mapa2') else "")
  
             if tramite_sasoftco:
                 GeoJson = {
@@ -316,7 +316,7 @@ class GeoJsonAprovechamientoCarbonVegetalMovilizacionView(generics.ListAPIView):
             "crs": { 
                 "type": "name", 
                 "properties": { 
-                    "name": "EPSG:9377" 
+                    "name": "EPSG:4326" 
                 } 
             },
             "features": GeoJson_list
@@ -983,7 +983,7 @@ class GeoJsonReporteViveroView(generics.ListAPIView):
                     "fecha_inicio_cuarentena":vivero.fecha_inicio_cuarentena if vivero.fecha_inicio_cuarentena else "",
                     "id_persona_cuarentena":vivero.id_persona_cuarentena.id_persona if vivero.id_persona_cuarentena else "",
                     "justificacion_cuarentena":vivero.justificacion_cuarentena if vivero.justificacion_cuarentena else "",
-                    "ruta_archivo_creacion":vivero.ruta_archivo_creacion if vivero.ruta_archivo_creacion else "",
+                    "ruta_archivo_creacion":vivero.ruta_archivo_creacion.ruta_archivo.url if vivero.ruta_archivo_creacion else "",
                     "activo":vivero.activo,
                     "item_ya_usado":vivero.item_ya_usado,
                 }

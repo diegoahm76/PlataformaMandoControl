@@ -15,13 +15,14 @@ class GeoJsonInscripcionDGAView(generics.ListAPIView):
         GeoJson_list = []
 
         for opa in opas:
+            lat, lon = UtilsGeoJson.get_coordinates(opa.coordenada_x, opa.coordenada_y)
 
             GeoJson = {
                 "type": "Feature",
                 "id": opa.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [opa.coordenada_x, opa.coordenada_y]
+                    "coordinates": [lat, lon]
                 },
                 "properties": {
                     "OBJECTID": opa.id_solicitud_tramite.id_solicitud_tramite,
@@ -60,20 +61,21 @@ class GeoJsonInscripcionGeneradorRCDView(generics.ListAPIView):
         GeoJson_list = []
 
         for opa in opas:
+            lat, lon = UtilsGeoJson.get_coordinates(opa.coordenada_x, opa.coordenada_y)
 
             GeoJson = {
                 "type": "Feature",
                 "id": opa.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [opa.coordenada_x, opa.coordenada_y]
+                    "coordinates": [lat, lon]
                 },
                 "properties": {
                     "OBJECTID": opa.id_solicitud_tramite.id_solicitud_tramite,
                     "Usuario": opa.id_solicitud_tramite.id_persona_registra.user_set.all().exclude(id_usuario=1).first().nombre_de_usuario,
                     "Nombre": opa.id_solicitud_tramite.nombre_proyecto,
-                    "Latitud": opa.coordenada_x,
-                    "Longitud": opa.coordenada_y,
+                    "Latitud": lat,
+                    "Longitud": lon,
                     "Area": "", # VALIDAR
                     "Fecha_Inicio_Obra": "", # VALIDAR
                     "Fecha_Estimada_Finalizacion": "", # VALIDAR
@@ -107,13 +109,14 @@ class GeoJsonInscripcionGeneradorACUView(generics.ListAPIView):
         GeoJson_list = []
 
         for opa in opas:
+            lat, lon = UtilsGeoJson.get_coordinates(opa.coordenada_x, opa.coordenada_y)
 
             GeoJson = {
                 "type": "Feature",
                 "id": opa.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [opa.coordenada_x, opa.coordenada_y]
+                    "coordinates": [lat, lon]
                 },
                 "properties": {
                     "OBJECTID": opa.id_solicitud_tramite.id_solicitud_tramite,
@@ -148,13 +151,14 @@ class GeoJsonInscripcionGestionACUView(generics.ListAPIView):
         GeoJson_list = []
 
         for opa in opas:
+            lat, lon = UtilsGeoJson.get_coordinates(opa.coordenada_x, opa.coordenada_y)
 
             GeoJson = {
                 "type": "Feature",
                 "id": opa.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [opa.coordenada_x, opa.coordenada_y]
+                    "coordinates": [lat, lon]
                 },
                 "properties": {
                     "OBJECTID": opa.id_solicitud_tramite.id_solicitud_tramite,
@@ -191,23 +195,24 @@ class GeoJsonFormulacionProyectosEscolaresView(generics.ListAPIView):
         GeoJson_list = []
 
         for opa in opas:
+            lat, lon = UtilsGeoJson.get_coordinates(opa.coordenada_x, opa.coordenada_y)
 
             GeoJson = {
                 "type": "Feature",
                 "id": opa.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [opa.coordenada_x, opa.coordenada_y]
+                    "coordinates": [lat, lon]
                 },
                 "properties": {
                     "OBJECTID": opa.id_solicitud_tramite.id_solicitud_tramite,
                     "Municipio": opa.cod_municipio.nombre,
-                    "Nombre_Colegio": "Validar", # VALIDAR
-                    "Nombre_PRAE": "Validar", # VALIDAR
-                    "latitud": opa.coordenada_x,
-                    "longitud": opa.coordenada_y,
+                    "Nombre_Colegio": "", # VALIDAR
+                    "Nombre_PRAE": "", # VALIDAR
+                    "latitud": lat,
+                    "longitud": lon,
                     "Persona_Encargado": UtilsGeoJson.get_nombre_persona(opa.id_solicitud_tramite.id_persona_titular),
-                    "Actividades_Realizadas": "Validar", # VALIDAR
+                    "Actividades_Realizadas": "", # VALIDAR
                     "Fecha_Inscripcion": opa.id_solicitud_tramite.fecha_registro.date(),
                 }
             }
@@ -235,13 +240,14 @@ class GeoJsonInscripcionGeneradorResiduosView(generics.ListAPIView):
         GeoJson_list = []
 
         for opa in opas:
+            lat, lon = UtilsGeoJson.get_coordinates(opa.coordenada_x, opa.coordenada_y)
 
             GeoJson = {
                 "type": "Feature",
                 "id": opa.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [opa.coordenada_x, opa.coordenada_y]
+                    "coordinates": [lat, lon]
                 },
                 "properties": {
                     "OBJECTID": opa.id_solicitud_tramite.id_solicitud_tramite,
@@ -249,8 +255,8 @@ class GeoJsonInscripcionGeneradorResiduosView(generics.ListAPIView):
                     "Usuario": opa.id_solicitud_tramite.id_persona_registra.user_set.all().exclude(id_usuario=1).first().nombre_de_usuario,
                     "Cantidad_Establecimiento": "", # VALIDAR
                     "Nombre_Establecimiento": "", # VALIDAR
-                    "Longitud": opa.coordenada_x,
-                    "Latitud": opa.coordenada_y,
+                    "Longitud": lon,
+                    "Latitud": lat,
                     "Actividad_Economica": "", # VALIDAR
                     "Fecha_Inscripcion": opa.id_solicitud_tramite.fecha_registro.date(),
                 }
@@ -279,13 +285,14 @@ class GeoJsonRegistroInventarioNacionalView(generics.ListAPIView):
         GeoJson_list = []
 
         for opa in opas:
+            lat, lon = UtilsGeoJson.get_coordinates(opa.coordenada_x, opa.coordenada_y)
 
             GeoJson = {
                 "type": "Feature",
                 "id": opa.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [opa.coordenada_x, opa.coordenada_y]
+                    "coordinates": [lat, lon]
                 },
                 "properties": {
                     "OBJECTID": opa.id_solicitud_tramite.id_solicitud_tramite,
@@ -326,13 +333,14 @@ class GeoJsonRegistroUnicoAmbientalRUAView(generics.ListAPIView):
         GeoJson_list = []
 
         for opa in opas:
+            lat, lon = UtilsGeoJson.get_coordinates(opa.coordenada_x, opa.coordenada_y)
 
             GeoJson = {
                 "type": "Feature",
                 "id": opa.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [opa.coordenada_x, opa.coordenada_y]
+                    "coordinates": [lat, lon]
                 },
                 "properties": {
                     "OBJECTID": opa.id_solicitud_tramite.id_solicitud_tramite,
@@ -368,13 +376,14 @@ class GeoJsonSalvoconductoMovilizacionEspecimenesView(generics.ListAPIView):
         GeoJson_list = []
 
         for opa in opas:
+            lat, lon = UtilsGeoJson.get_coordinates(opa.coordenada_x, opa.coordenada_y)
 
             GeoJson = {
                 "type": "Feature",
                 "id": opa.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [opa.coordenada_x, opa.coordenada_y]
+                    "coordinates": [lat, lon]
                 },
                 "properties": {
                     "OBJECTID": opa.id_solicitud_tramite.id_solicitud_tramite,
@@ -412,21 +421,22 @@ class GeoJsonNegociosVerdesView(generics.ListAPIView):
         GeoJson_list = []
 
         for opa in opas:
+            lat, lon = UtilsGeoJson.get_coordinates(opa.coordenada_x, opa.coordenada_y)
 
             GeoJson = {
                 "type": "Feature",
                 "id": opa.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [opa.coordenada_x, opa.coordenada_y]
+                    "coordinates": [lat, lon]
                 },
                 "properties": {
                     "OBJECTID": opa.id_solicitud_tramite.id_solicitud_tramite,
                     "Usuario": opa.id_solicitud_tramite.id_persona_registra.user_set.all().exclude(id_usuario=1).first().nombre_de_usuario,
                     "Nombre_Negocio": "", # VALIDAR
                     "Municipio": opa.cod_municipio.nombre,
-                    "Latitud": opa.coordenada_x,
-                    "Longitud": opa.coordenada_y,
+                    "Latitud": lat,
+                    "Longitud": lon,
                     "Sector_Productivo": "", # VALIDAR
                     "Producto_Mas_Vendido": "" # VALIDAR
                 }
@@ -455,13 +465,14 @@ class GeoJsonPlanesPaisajisticosOrdenatoView(generics.ListAPIView):
         GeoJson_list = []
 
         for opa in opas:
+            lat, lon = UtilsGeoJson.get_coordinates(opa.coordenada_x, opa.coordenada_y)
 
             GeoJson = {
                 "type": "Feature",
                 "id": opa.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [opa.coordenada_x, opa.coordenada_y]
+                    "coordinates": [lat, lon]
                 },
                 "properties": {
                     "OBJECTID": opa.id_solicitud_tramite.id_solicitud_tramite,

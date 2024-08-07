@@ -36,9 +36,7 @@ class UtilsGeoJson:
                     else:
                         value = item['value_key']
                     organized_data[field_name] = value
-            else:
-                raise NotFound('No se encontró el detalle del trámite elegido')
-            
+
         return organized_data
     
     @staticmethod

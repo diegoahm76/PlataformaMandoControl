@@ -303,36 +303,36 @@ class GeoJsonJardinesBotanicosView(generics.ListAPIView):
         GeoJson_list = []
 
         for permiso_menor in permisos_menores:
-            predios = Predios.objects.filter(id_solicitud_tramite=permiso_menor.id_solicitud_tramite)
+            # predios = Predios.objects.filter(id_solicitud_tramite=permiso_menor.id_solicitud_tramite)
             lat, lon = UtilsGeoJson.get_coordinates(permiso_menor.coordenada_x, permiso_menor.coordenada_y)
 
-            for predio in predios:
-                GeoJson = {
-                    "type": "Feature",
-                    "id": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
-                    "geometry": {
-                        "type": "Point",
-                        "coordinates": [lat, lon]
-                    },
-                    "properties": {
-                        "OBJECTID": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
-                        "Usuario": permiso_menor.id_solicitud_tramite.id_persona_registra.user_set.all().exclude(id_usuario=1).first().nombre_de_usuario,
-                        "Matricula_Inmobiliaria": predio.matricula_inmobiliaria, #VALIDAR
-                        "Latitud": lat,
-                        "Longitud": lon,
-                        "Uso_Suelo_POT":"", # VALIDAR
-                        "Area":"", # VALIDAR
-                        "Nombre_Beneficiario":"", # VALIDAR
-                        "Identificacion_Beneficiario":"", # VALIDAR
-                        "Numero_Expediente": UtilsGeoJson.get_expediente(permiso_menor),
-                        "Termino_Licencia": "", # VALIDAR
-                        "Resolucion": "", # VALIDAR
-                        "Fecha_Inicio_Vigencia": "", # VALIDAR
-                        "Fecha_Fin_Vigencia": "" # VALIDAR
+            # for predio in predios:
+            GeoJson = {
+                "type": "Feature",
+                "id": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [lat, lon]
+                },
+                "properties": {
+                    "OBJECTID": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
+                    "Usuario": permiso_menor.id_solicitud_tramite.id_persona_registra.user_set.all().exclude(id_usuario=1).first().nombre_de_usuario,
+                    "Matricula_Inmobiliaria": "", #predio.matricula_inmobiliaria, #VALIDAR
+                    "Latitud": lat,
+                    "Longitud": lon,
+                    "Uso_Suelo_POT":"", # VALIDAR
+                    "Area":"", # VALIDAR
+                    "Nombre_Beneficiario":"", # VALIDAR
+                    "Identificacion_Beneficiario":"", # VALIDAR
+                    "Numero_Expediente": UtilsGeoJson.get_expediente(permiso_menor),
+                    "Termino_Licencia": "", # VALIDAR
+                    "Resolucion": "", # VALIDAR
+                    "Fecha_Inicio_Vigencia": "", # VALIDAR
+                    "Fecha_Fin_Vigencia": "" # VALIDAR
 
-                    }
                 }
-                GeoJson_list.append(GeoJson)
+            }
+            GeoJson_list.append(GeoJson)
 
         geojson_final = {
             "type": "FeatureCollection",

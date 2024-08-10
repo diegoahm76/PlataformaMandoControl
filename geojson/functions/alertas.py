@@ -4,6 +4,8 @@ import os
 import arcgis
 from geojson.lists.geojsons_list import geojsons_LIST
 from geojson.lists.geojsons_estaciones_list import geojsons_estaciones_LIST
+from keyring import get_keyring
+get_keyring()
 
 def update_arcgis_tramites_layers():
     # AUTENTICAR CON ARCGIS

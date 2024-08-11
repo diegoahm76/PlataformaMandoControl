@@ -1,12 +1,10 @@
+from geojson.functions.alertas import update_arcgis_tramites_layers, update_arcgis_estaciones_layers
 
-import requests
-import json
-import os
-from geojson.functions.alertas import  update_arcgis_layers
-from datetime import datetime, timedelta
-# from recaudo.Extraccion.ExtraccionBaseDatosPimisis import  extraccion_pimisis_job  # Importa la función ExtraccionBaseDatosPimisis
+def update_tramites_arcgis():
+	update_arcgis_tramites_layers()
+	print('FINISH CRONJOB TRAMITES')
 
 
-def update_arcgis():
-	update_arcgis_layers()
-	print('FINISH CRONJOB')
+def update_estaciones_arcgis():
+	update_arcgis_estaciones_layers()
+	print('FINISH CRONJOB ESTACIONES')

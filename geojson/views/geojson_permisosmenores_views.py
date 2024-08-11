@@ -22,7 +22,7 @@ class GeoJsonCertificacionInscripcionControlView(generics.ListAPIView):
                 "id": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [lat, lon]
+                    "coordinates": [lon, lat]
                 },
                 "properties": {
                     "Usuario": UtilsGeoJson.get_nombre_persona(permiso_menor.id_solicitud_tramite.id_persona_titular),
@@ -66,7 +66,7 @@ class GeoJsonPermisoCazaView(generics.ListAPIView):
                 "id": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [lat, lon]
+                    "coordinates": [lon, lat]
                 },
                 "properties": {
                     "OBJECTID": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
@@ -113,7 +113,7 @@ class GeoJsonRedAmigosSilvestresView(generics.ListAPIView):
                 "id": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [lat, lon]
+                    "coordinates": [lon, lat]
                 },
                 "properties": {
                     "OBJECTID": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
@@ -159,7 +159,7 @@ class GeoJsonRegistroPlantacionesForestales(generics.ListAPIView):
                 "id": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [lat, lon]
+                    "coordinates": [lon, lat]
                 },
                 "properties": {
                     "OBJECTID": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
@@ -211,7 +211,7 @@ class GeoJsonRegistroLicenciaZoocriadero(generics.ListAPIView):
                 "id": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [lat, lon]
+                    "coordinates": [lon, lat]
                 },
                 "properties": {
                     "OBJECTID": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
@@ -256,7 +256,7 @@ class GeoJsonPermisoZoologico(generics.ListAPIView):
                 "id": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [lat, lon]
+                    "coordinates": [lon, lat]
                 },
                 "properties": {
                     "OBJECTID": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
@@ -312,7 +312,7 @@ class GeoJsonJardinesBotanicosView(generics.ListAPIView):
                 "id": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [lat, lon]
+                    "coordinates": [lon, lat]
                 },
                 "properties": {
                     "OBJECTID": permiso_menor.id_solicitud_tramite.id_solicitud_tramite,

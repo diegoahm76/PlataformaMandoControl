@@ -27,7 +27,7 @@ class GeoJsonDeterminantesAmbientalesView(generics.ListAPIView):
                     "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [lat, lon]
+                        "coordinates": [lon, lat]
                     },
                     "properties": {
                         "OBJECTID": tramite.id_solicitud_tramite.id_solicitud_tramite,
@@ -82,7 +82,7 @@ class GeoJsonCertificacionAmbientalDesintegracionVehicularView(generics.ListAPIV
                     "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [lat, lon]
+                        "coordinates": [lon, lat]
                     },
                     "properties": {
                         "OBJECTID": tramite.id_solicitud_tramite.id_solicitud_tramite,
@@ -133,7 +133,7 @@ class GeoJsonInscripcionGestorRCDView(generics.ListAPIView):
                     "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [lat, lon]
+                        "coordinates": [lon, lat]
                     },
                     "properties": {
                         "usuario": UtilsGeoJson.get_nombre_persona(tramite.id_solicitud_tramite.id_persona_titular),
@@ -186,7 +186,7 @@ class GeoJsonLicenciaAmbientalTransElectricaView(generics.ListAPIView):
                     "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [lat, lon]
+                        "coordinates": [lon, lat]
                     },
                     "properties": {
                         "Nombre": UtilsGeoJson.get_nombre_persona(tramite.id_solicitud_tramite.id_persona_titular),
@@ -236,7 +236,7 @@ class GeoJsonPermisoOcupacionPlayaView(generics.ListAPIView):
                     "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [lat, lon]
+                        "coordinates": [lon, lat]
                     },
                     "properties": {
                         "usuario": UtilsGeoJson.get_nombre_persona(tramite.id_solicitud_tramite.id_persona_titular),
@@ -287,7 +287,7 @@ class GeoJsonAprovechamientoCarbonVegetalMovilizacionView(generics.ListAPIView):
                     "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [lat, lon]
+                        "coordinates": [lon, lat]
                     },
                     "properties": {
                         "OBJECTID": tramite.id_solicitud_tramite.id_solicitud_tramite,
@@ -340,7 +340,7 @@ class GeoJsonPermisoVertimientosAguaView(generics.ListAPIView):
                 "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [lat, lon]
+                    "coordinates": [lon, lat]
                 },
                 "properties": {
                     "OBJECTID": tramite.id_solicitud_tramite.id_solicitud_tramite,
@@ -395,7 +395,7 @@ class GeoJsonAprovechamientoProductosForestalesView(generics.ListAPIView):
                     "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [lat, lon]
+                        "coordinates": [lon, lat]
                     },
                     "properties": {
                         "OBJECTID": tramite.id_solicitud_tramite.id_solicitud_tramite,
@@ -448,7 +448,7 @@ class GeoJsonPermisoVertimientosSueloView(generics.ListAPIView):
                 "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [lat, lon]
+                    "coordinates": [lon, lat]
                 },
                 "properties": {
                     "OBJECTID": tramite.id_solicitud_tramite.id_solicitud_tramite,
@@ -500,7 +500,7 @@ class GeoJsonPermisosProspeccionAguasSubterraneasView(generics.ListAPIView):
                     "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [lat, lon]
+                        "coordinates": [lon, lat]
                     },
                     "properties": {
                         "Numero_Matricula_Inmobiliaria": tramite_sasoftco.get('MatriInmobi', ""),
@@ -554,7 +554,7 @@ class GeoJsonPlanesContingenciaEstacionesServicioView(generics.ListAPIView):
                     "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [lat, lon]
+                        "coordinates": [lon, lat]
                     },
                     "properties": {
                         "Nombre_Estacion_Servicio": tramite_sasoftco.get("Npredio1", ""), # VALIDAR
@@ -605,7 +605,7 @@ class GeoJsonProyectosIndustrialesMineriasView(generics.ListAPIView):
                     "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [lat, lon]
+                        "coordinates": [lon, lat]
                     },
                     "properties": {
                         "Nombre": UtilsGeoJson.get_nombre_persona(tramite.id_solicitud_tramite.id_persona_titular),
@@ -650,7 +650,7 @@ class GeoJsonPermisoOcupacionCaucesView(generics.ListAPIView):
                     "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [lat, lon]
+                        "coordinates": [lon, lat]
                     },
                     "properties": {
                         "Nombre": tramite.id_solicitud_tramite.nombre_proyecto,
@@ -702,7 +702,7 @@ class GeoJsonRecoleccionEspecimenesView(generics.ListAPIView):
                     "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [lat, lon]
+                        "coordinates": [lon, lat]
                     },
                     "properties": {
                         "Usuario": tramite.id_solicitud_tramite.id_persona_registra.user_set.all().exclude(id_usuario=1).first().nombre_de_usuario,
@@ -751,7 +751,7 @@ class GeoJsonCertificacionAmbientalAutomotoresView(generics.ListAPIView):
                     "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [lat, lon]
+                        "coordinates": [lon, lat]
                     },
                     "properties": {
                         "Usuario": tramite.id_solicitud_tramite.id_persona_registra.user_set.all().exclude(id_usuario=1).first().nombre_de_usuario,
@@ -799,7 +799,7 @@ class GeoJsonPermisoEmisionesAtmosfericasView(generics.ListAPIView):
                     "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [lat, lon]
+                        "coordinates": [lon, lat]
                     },
                     "properties": {
                         "Nombre_Usuario": tramite.id_solicitud_tramite.id_persona_registra.user_set.all().exclude(id_usuario=1).first().nombre_de_usuario,
@@ -852,7 +852,7 @@ class GeoJsonInscripcionAcopiadorAceitesView(generics.ListAPIView):
                     "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [lat, lon]
+                        "coordinates": [lon, lat]
                     },
                     "properties": {
                         "Usuario": tramite.id_solicitud_tramite.id_persona_registra.user_set.all().exclude(id_usuario=1).first().nombre_de_usuario,
@@ -901,7 +901,7 @@ class GeoJsonPQRSDFView(generics.ListAPIView):
                 "id": pqrsdf.id_PQRSDF,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [lat, lon]
+                    "coordinates": [lon, lat]
                 },
                 "properties": {
                     "Municipio" : pqrsdf.id_sucursal_especifica_implicada.municipio.nombre, # VALIDAR
@@ -952,7 +952,7 @@ class GeoJsonReporteViveroView(generics.ListAPIView):
                 "id": vivero.id_vivero,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [lat, lon]
+                    "coordinates": [lon, lat]
                 },
                 "properties": {
                     "OBJECTID": vivero.id_vivero,
@@ -1020,7 +1020,7 @@ class GeoJsonAlmacenamientoSustanciasNocivasView(generics.ListAPIView):
                 "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [lat, lon]
+                    "coordinates": [lon, lat]
                 },
                 "properties": {
                     "OBJECTID": tramite.id_solicitud_tramite.id_solicitud_tramite,
@@ -1066,7 +1066,7 @@ class GeoJsonRegistroLibroOperacionesView(generics.ListAPIView):
                 "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [lat, lon]
+                    "coordinates": [lon, lat]
                 },
                 "properties": {
                     "OBJECTID": tramite.id_solicitud_tramite.id_solicitud_tramite,
@@ -1123,7 +1123,7 @@ class GeoJsonAprovechamientoForestalView(generics.ListAPIView):
                     "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [lat, lon]
+                        "coordinates": [lon, lat]
                     },
                     "properties": {
                         "Nombre": tramite_sasoftco.get('nameProject', ""),
@@ -1183,7 +1183,7 @@ class GeoJsonAprovechamientoForestalDomesticoView(generics.ListAPIView):
                     "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [lat, lon]
+                        "coordinates": [lon, lat]
                     },
                     "properties": {
                         "Nombre": tramite_sasoftco.get('nameProject', ""),
@@ -1242,7 +1242,7 @@ class GeoJsonSolicitudDeterminantesAmbientalesPlanesParcialesView(generics.ListA
                     "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [lat, lon]
+                        "coordinates": [lon, lat]
                     },
                     "properties": {
                         "Nombre_geo": tramite_sasoftco.get('nameProject', ""),#Validar
@@ -1295,7 +1295,7 @@ class GeoJsonConcesionAguasSuperficialesView(generics.ListAPIView):
                     "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [lat, lon]
+                        "coordinates": [lon, lat]
                     },
                     "properties": {
                         "OBJECTID": tramite.id_solicitud_tramite.id_solicitud_tramite,
@@ -1346,7 +1346,7 @@ class GeoJsonConcesionAguasSubterraneasView(generics.ListAPIView):
                     "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [lat, lon]
+                        "coordinates": [lon, lat]
                     },
                     "properties": {
                         "OBJECTID": tramite.id_solicitud_tramite.id_solicitud_tramite,
@@ -1404,7 +1404,7 @@ class GeoJsonExpedientesView(generics.ListAPIView):
                 "id": expediente.id_expediente_documental,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [lat, lon]
+                    "coordinates": [lon, lat]
                 },
                 "properties": {
                     "Municipio" : tramite_expediente.cod_municipio.nombre,
@@ -1449,7 +1449,7 @@ class GeoJsonLicenciaAmbientalNoConvencionalView(generics.ListAPIView):
                     "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [lat, lon]
+                        "coordinates": [lon, lat]
                     },
                     "properties": {
                         "usuario": UtilsGeoJson.get_nombre_persona(tramite.id_solicitud_tramite.id_persona_titular),
@@ -1501,7 +1501,7 @@ class GeoJsonLicenciaAmbientalTransferenciaFotovoltaicaView(generics.ListAPIView
                     "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [lat, lon]
+                        "coordinates": [lon, lat]
                     },
                     "properties": {
                         "Nombre": UtilsGeoJson.get_nombre_persona(tramite.id_solicitud_tramite.id_persona_titular),
@@ -1551,7 +1551,7 @@ class GeoJsonLicenciaAmbientalRellenosSanitariosView(generics.ListAPIView):
                     "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [lat, lon]
+                        "coordinates": [lon, lat]
                     },
                     "properties": {
                         "Numero_Matricula": tramite_sasoftco.get('MatriInmobi', ""),
@@ -1601,7 +1601,7 @@ class GeoJsonLicenciaAmbientalAprovechamientoResiduosOrganicosView(generics.List
                     "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [lat, lon]
+                        "coordinates": [lon, lat]
                     },
                     "properties": {
                         "Nombre_Proyecto": tramite.id_solicitud_tramite.nombre_proyecto,
@@ -1654,7 +1654,7 @@ class GeoJsonMedidasManejoAmbientalView(generics.ListAPIView):
                     "id": tramite.id_solicitud_tramite.id_solicitud_tramite,
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [lat, lon]
+                        "coordinates": [lon, lat]
                     },
                     "properties": {
                         "Nombre": UtilsGeoJson.get_nombre_persona(tramite.id_solicitud_tramite.id_persona_titular),

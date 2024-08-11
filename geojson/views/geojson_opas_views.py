@@ -22,7 +22,7 @@ class GeoJsonInscripcionDGAView(generics.ListAPIView):
                 "id": opa.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [lat, lon]
+                    "coordinates": [lon, lat]
                 },
                 "properties": {
                     "OBJECTID": opa.id_solicitud_tramite.id_solicitud_tramite,
@@ -68,7 +68,7 @@ class GeoJsonInscripcionGeneradorRCDView(generics.ListAPIView):
                 "id": opa.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [lat, lon]
+                    "coordinates": [lon, lat]
                 },
                 "properties": {
                     "OBJECTID": opa.id_solicitud_tramite.id_solicitud_tramite,
@@ -116,7 +116,7 @@ class GeoJsonInscripcionGeneradorACUView(generics.ListAPIView):
                 "id": opa.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [lat, lon]
+                    "coordinates": [lon, lat]
                 },
                 "properties": {
                     "OBJECTID": opa.id_solicitud_tramite.id_solicitud_tramite,
@@ -158,7 +158,7 @@ class GeoJsonInscripcionGestionACUView(generics.ListAPIView):
                 "id": opa.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [lat, lon]
+                    "coordinates": [lon, lat]
                 },
                 "properties": {
                     "OBJECTID": opa.id_solicitud_tramite.id_solicitud_tramite,
@@ -202,7 +202,7 @@ class GeoJsonFormulacionProyectosEscolaresView(generics.ListAPIView):
                 "id": opa.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [lat, lon]
+                    "coordinates": [lon, lat]
                 },
                 "properties": {
                     "OBJECTID": opa.id_solicitud_tramite.id_solicitud_tramite,
@@ -247,7 +247,7 @@ class GeoJsonInscripcionGeneradorResiduosView(generics.ListAPIView):
                 "id": opa.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [lat, lon]
+                    "coordinates": [lon, lat]
                 },
                 "properties": {
                     "OBJECTID": opa.id_solicitud_tramite.id_solicitud_tramite,
@@ -292,7 +292,7 @@ class GeoJsonRegistroInventarioNacionalView(generics.ListAPIView):
                 "id": opa.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [lat, lon]
+                    "coordinates": [lon, lat]
                 },
                 "properties": {
                     "OBJECTID": opa.id_solicitud_tramite.id_solicitud_tramite,
@@ -340,7 +340,7 @@ class GeoJsonRegistroUnicoAmbientalRUAView(generics.ListAPIView):
                 "id": opa.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [lat, lon]
+                    "coordinates": [lon, lat]
                 },
                 "properties": {
                     "OBJECTID": opa.id_solicitud_tramite.id_solicitud_tramite,
@@ -383,7 +383,7 @@ class GeoJsonSalvoconductoMovilizacionEspecimenesView(generics.ListAPIView):
                 "id": opa.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [lat, lon]
+                    "coordinates": [lon, lat]
                 },
                 "properties": {
                     "OBJECTID": opa.id_solicitud_tramite.id_solicitud_tramite,
@@ -428,7 +428,7 @@ class GeoJsonNegociosVerdesView(generics.ListAPIView):
                 "id": opa.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [lat, lon]
+                    "coordinates": [lon, lat]
                 },
                 "properties": {
                     "OBJECTID": opa.id_solicitud_tramite.id_solicitud_tramite,
@@ -472,7 +472,7 @@ class GeoJsonPlanesPaisajisticosOrdenatoView(generics.ListAPIView):
                 "id": opa.id_solicitud_tramite.id_solicitud_tramite,
                 "geometry": {
                     "type": "Point",
-                    "coordinates": [lat, lon]
+                    "coordinates": [lon, lat]
                 },
                 "properties": {
                     "OBJECTID": opa.id_solicitud_tramite.id_solicitud_tramite,
